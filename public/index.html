@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Startklar für deine erste Immobilie · Jutta Reichenbach</title>
+<meta name="description" content="Bist du bereit für deine erste vermietete Wohnung? Neun Fragen, dann weißt du, wo du stehst und was noch fehlt.">
+<meta name="theme-color" content="#1D2B3A">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bist du startklar für deine erste Immobilie?">
+<meta property="og:description" content="Neun Fragen, zwei Minuten. Dann weißt du, wo du stehst und was dir noch fehlt.">
+<meta property="og:image" content="https://startklar.juttareichenbach.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/icon.png">
+<link rel="apple-touch-icon" href="/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap">
+<style>
+/* Eine schmale Spalte wie eine App am Handy: 1 Dein Geld, 2 Du und die Bank, 3 Ergebnis, dann Plan per Mail */
+:root{
+  --bg:#FAF6EC; --surface:#FFFFFF; --ink:#1D2B3A; --muted:#5A6573; --line:#E6DCC4;
+  --accent:#EDC313; --accent-ink:#1D2B3A; --sand:#F0E2C2; --blue:#A7BDD6; --track:#E9E1CD;
+  --good:#2F7D4F; --good-bg:#E3F1E7; --warn:#8A6100; --warn-bg:#FBF1CF; --todo:#1D2B3A; --todo-bg:#DCE5EF;
+  --display:'Barlow Condensed','Arial Narrow',sans-serif; --body:'DM Sans',system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141E29; --surface:#1D2B3A; --ink:#F3EEE2; --muted:#A9B4C2; --line:#2E3F52; --track:#2E3F52;
+  --sand:#3A3424; --good:#7FD39C; --good-bg:#1E3A2A; --warn:#F2CF5B; --warn-bg:#3A3015; --todo:#C9D7E8; --todo-bg:#24364A; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141E29; --surface:#1D2B3A; --ink:#F3EEE2; --muted:#A9B4C2; --line:#2E3F52; --track:#2E3F52;
+  --sand:#3A3424; --good:#7FD39C; --good-bg:#1E3A2A; --warn:#F2CF5B; --warn-bg:#3A3015; --todo:#C9D7E8; --todo-bg:#24364A; color-scheme:dark}
+html,body{margin:0}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body)}
+.wrap{max-width:640px;margin:0 auto;padding-block:24px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
+.proto{align-self:flex-start;font:700 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;background:var(--sand);padding:6px 9px;border-radius:4px}
+header{display:flex;flex-direction:column;gap:0;background:#1D2B3A;color:#FAF6EC;border-radius:14px;padding:26px 22px 24px}
+.eyebrow{font:700 12px/1 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+header .eyebrow{color:#A7BDD6;margin-bottom:22px}
+h1{font:800 clamp(46px,12vw,72px)/.92 var(--display);text-transform:uppercase;margin:0;text-wrap:balance}
+.lede{color:var(--muted);margin:0}
+.sub{font:800 clamp(32px,9vw,46px)/1 var(--display);text-transform:uppercase;margin:12px 0 0;color:#EDC313}
+header .lede{margin-top:18px;color:#D9DEE4}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.stephead{display:flex;align-items:center;gap:12px}
+.num{flex:none;width:30px;height:30px;border-radius:50%;background:#1D2B3A;color:var(--accent);font:800 19px/30px var(--display);text-align:center}
+h2{font:800 26px/1 var(--display);text-transform:uppercase;margin:0}
+h3{font:700 12px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;margin:0;color:var(--muted)}
+button,.btn{font:700 15px/1 var(--body);border-radius:8px;padding:14px 18px;cursor:pointer;border:1px solid transparent;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.primary{background:var(--accent);color:var(--accent-ink)}
+.ghost{background:transparent;color:inherit;border-color:currentColor}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* Regler */
+.sl{display:flex;flex-direction:column;gap:6px}
+.sl .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.sl label,.q legend{font-weight:500;font-size:15px}
+.sl label small,.q legend small{display:block;color:var(--muted);font-weight:400;font-size:12.5px}
+.val{display:flex;align-items:baseline;gap:4px;font:800 26px/1 var(--display);font-variant-numeric:tabular-nums;flex:none}
+.val input{font:inherit;color:inherit;background:transparent;border:0;border-bottom:1px dashed var(--line);width:6.6ch;text-align:right;padding:0}
+.val input:focus{outline:none;border-bottom-color:var(--accent)}
+.val em{font:500 14px var(--body);font-style:normal;color:var(--muted)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(to right,var(--accent) var(--p,50%),var(--track) var(--p,50%))}
+input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:var(--track)}
+input[type=range]::-moz-range-progress{height:6px;border-radius:3px;background:var(--accent)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#1D2B3A;border:3px solid var(--accent);margin-top:-9px;cursor:grab}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#1D2B3A;border:3px solid var(--accent);cursor:grab}
+/* Auswahl-Chips */
+.q{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+.q legend{padding:0;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{position:relative}
+.chips input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chips span{display:block;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:10px 14px;font-size:14px;font-weight:500;cursor:pointer}
+.chips input:checked+span{background:#1D2B3A;color:#FAF6EC;border-color:#1D2B3A}
+.chips input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+/* Ergebnis */
+.verdict{border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:8px}
+.verdict.good{background:#2F7D4F;color:#fff}
+.verdict.warn{background:#EDC313;color:#1D2B3A}
+.verdict.todo{background:#1D2B3A;color:#FAF6EC}
+.verdict .lbl{font:700 12px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+.verdict .big{font:800 46px/1 var(--display);text-transform:uppercase}
+.verdict p{margin:0;font-size:15px}
+.meter{display:flex;gap:4px}
+.meter i{flex:1;height:8px;border-radius:4px;background:currentColor;opacity:.25}
+.meter i.on{opacity:1}
+.areas{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.areas li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--bg)}
+.areas b{font-size:15px}
+.areas .why{grid-column:1/-1;font-size:13.5px;color:var(--muted)}
+.pill{font:700 11px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:6px 8px;border-radius:4px;white-space:nowrap}
+.pill.ok{background:var(--good-bg);color:var(--good)}
+.pill.fast{background:var(--warn-bg);color:var(--warn)}
+.pill.fehlt{background:var(--todo-bg);color:var(--todo)}
+.key{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);margin:0}
+/* Plan */
+.plan{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:12px}
+.plan li b{display:block}
+.plan li span{font-size:14.5px;color:var(--muted)}
+.gate{border:2px solid var(--ink)}
+.gate form{display:flex;flex-direction:column;gap:12px}
+.gate input[type=email],.gate input[type=text]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px 14px;width:100%}
+.consent{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;font-size:13px;color:var(--muted);align-items:start}
+.consent input{width:20px;height:20px;margin:1px 0 0;accent-color:#1D2B3A}
+.consent a,.legal a{color:inherit}
+.note{font-size:13px;color:var(--muted);margin:0}
+.next{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.next p{margin:0}
+.cta{background:#1D2B3A;color:#FAF6EC;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.cta h2{color:var(--accent)}
+.cta p{margin:0}
+.legal{font-size:12px;color:var(--muted);margin:0}
+.foot{display:flex;gap:16px;flex-wrap:wrap;font-size:12px}
+.foot a{color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="proto" id="proto">Vorschau · es wird noch nichts verschickt</div>
+
+  <header>
+    <div class="eyebrow">Jutta Reichenbach · 2 Minuten</div>
+    <h1>Bist du startklar?</h1>
+    <p class="sub">Für deine erste Immobilie</p>
+    <p class="lede">Bevor du das erste Exposé anschaust, schau auf dein eigenes Konto. Neun Fragen, dann weißt du, wo du stehst und was dir noch fehlt.</p>
+  </header>
+
+  <section class="card" aria-labelledby="h-ziel">
+    <div class="stephead"><span class="num">1</span><h2 id="h-ziel">Dein Ziel</h2></div>
+    <fieldset class="q"><legend>Wofür willst du deine erste Wohnung kaufen?<small>Mehrere Antworten möglich.</small></legend>
+      <div class="chips" data-key="ziel">
+        <label><input type="checkbox" name="ziel" value="rente"><span>Für meine Altersvorsorge</span></label>
+        <label><input type="checkbox" name="ziel" value="frei"><span>Finanziell unabhängig werden</span></label>
+        <label><input type="checkbox" name="ziel" value="extra"><span>Ein zweites Einkommen</span></label>
+        <label><input type="checkbox" name="ziel" value="vermoegen"><span>Eigenes Vermögen aufbauen</span></label>
+        <label><input type="checkbox" name="ziel" value="offen"><span>Weiß ich noch nicht</span></label>
+      </div>
+    </fieldset>
+  </section>
+
+  <section class="card" aria-labelledby="h-geld">
+    <div class="stephead"><span class="num">2</span><h2 id="h-geld">Dein Geld</h2></div>
+
+    <div class="sl" data-key="netto" data-min="0" data-max="8000" data-step="100" data-val="3000">
+      <div class="top"><label for="r-netto">Was kommt jeden Monat netto bei dir an?<small>Dein eigenes Gehalt, so wie es auf dem Konto landet.</small></label>
+      <div class="val"><input inputmode="numeric" aria-label="Netto pro Monat in Euro"><em>€</em></div></div>
+      <input type="range" id="r-netto">
+    </div>
+
+    <div class="sl" data-key="rest" data-min="0" data-max="3000" data-step="50" data-val="400">
+      <div class="top"><label for="r-rest">Was bleibt am Monatsende übrig?<small>Nach Miete, Einkauf, Versicherungen und Urlaub. Schätz ehrlich.</small></label>
+      <div class="val"><input inputmode="numeric" aria-label="Übrig pro Monat in Euro"><em>€</em></div></div>
+      <input type="range" id="r-rest">
+    </div>
+
+    <div class="sl" data-key="spar" data-min="0" data-max="150000" data-step="1000" data-val="10000">
+      <div class="top"><label for="r-spar">Wie viel hast du gespart?<small>Tagesgeld oder Depot, alles, was du in ein paar Wochen flüssig machen kannst.</small></label>
+      <div class="val"><input inputmode="numeric" aria-label="Erspartes in Euro"><em>€</em></div></div>
+      <input type="range" id="r-spar">
+    </div>
+
+    <div class="sl" data-key="raten" data-min="0" data-max="1500" data-step="25" data-val="0">
+      <div class="top"><label for="r-raten">Was zahlst du jeden Monat für Kredite und Raten?<small>Auto, Handy auf Raten, Möbel, Dispo. Deine eigene Miete gehört hier nicht rein.</small></label>
+      <div class="val"><input inputmode="numeric" aria-label="Raten pro Monat in Euro"><em>€</em></div></div>
+      <input type="range" id="r-raten">
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="h-bank">
+    <div class="stephead"><span class="num">3</span><h2 id="h-bank">Du und die Bank</h2></div>
+
+    <fieldset class="q"><legend>Wie arbeitest du?</legend>
+      <div class="chips" data-key="job">
+        <label><input type="radio" name="job" value="fest" checked><span>Unbefristet oder verbeamtet</span></label>
+        <label><input type="radio" name="job" value="selbst"><span>Selbstständig</span></label>
+        <label><input type="radio" name="job" value="probe"><span>Befristet oder in der Probezeit</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="q"><legend>Gibt es negative Einträge bei der Schufa?</legend>
+      <div class="chips" data-key="schufa">
+        <label><input type="radio" name="schufa" value="nein" checked><span>Nein, alles sauber</span></label>
+        <label><input type="radio" name="schufa" value="weiss"><span>Keine Ahnung</span></label>
+        <label><input type="radio" name="schufa" value="ja"><span>Ja</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="q"><legend>Weißt du, wofür dein Geld jeden Monat draufgeht?</legend>
+      <div class="chips" data-key="ueberblick">
+        <label><input type="radio" name="ueberblick" value="genau"><span>Ja, auf den Euro</span></label>
+        <label><input type="radio" name="ueberblick" value="grob" checked><span>So ungefähr</span></label>
+        <label><input type="radio" name="ueberblick" value="nein"><span>Ehrlich gesagt nein</span></label>
+      </div>
+    </fieldset>
+
+    <div class="sl" data-key="zeit" data-min="0" data-max="15" data-step="1" data-val="4">
+      <div class="top"><label for="r-zeit">Wie viele Stunden pro Woche hast du in den nächsten Monaten dafür?<small>Für Bankgespräche und Besichtigungen und um Wohnungen durchzurechnen.</small></label>
+      <div class="val"><input inputmode="numeric" aria-label="Stunden pro Woche"><em>Std.</em></div></div>
+      <input type="range" id="r-zeit">
+    </div>
+  </section>
+
+  <section class="card gate" id="gate" aria-labelledby="h-gate">
+    <div class="stephead"><span class="num">4</span><h2 id="h-gate">Dein Ergebnis</h2></div>
+    <p style="margin:0">Wo du heute stehst, und für jeden Punkt, der noch nicht passt, was du als Nächstes tust. Du siehst alles sofort hier und bekommst es zusätzlich per Mail.</p>
+    <form id="gateForm" novalidate>
+      <input type="text" id="gName" placeholder="Vorname" autocomplete="given-name">
+      <input type="email" id="gMail" placeholder="E-Mail-Adresse" autocomplete="email" required>
+      <label class="consent"><input type="checkbox" id="gOk" required><span>Ja, schick mir mein Ergebnis und Jutta Reichenbachs Newsletter rund um Immobilien. Abmelden geht jederzeit mit einem Klick. Mehr dazu in der <a id="dsLink1" href="#">Datenschutzerklärung</a>.</span></label>
+      <button class="primary" type="submit">Ergebnis anzeigen</button>
+      <p class="note" id="gMsg" role="status"></p>
+    </form>
+  </section>
+
+  <section class="card" id="ergCard" hidden aria-labelledby="h-erg" aria-live="polite">
+    <h2 id="h-erg">Wo du stehst</h2>
+    <div class="verdict" id="verdict">
+      <div class="lbl">Dein Ergebnis</div>
+      <div class="big" id="vBig"></div>
+      <div class="meter" id="meter" aria-hidden="true"></div>
+      <p id="vText"></p>
+    </div>
+    <ul class="areas" id="areas"></ul>
+    <p class="key"><span><span class="pill ok">passt</span> sieht die Bank gern</span><span><span class="pill fast">fast</span> kleine Stellschraube</span><span><span class="pill fehlt">fehlt noch</span> hier fängst du an</span></p>
+  </section>
+
+
+  <section class="card" id="planCard" hidden aria-labelledby="h-plan">
+    <h2 id="h-plan">Dein Plan</h2>
+    <p id="zielText" style="margin:0"></p>
+    <ol class="plan" id="plan"></ol>
+  </section>
+
+  <section class="next" id="nextExpose" data-gated hidden>
+    <h3>Dein nächster Schritt</h3>
+    <p><b>Der Exposé-Check.</b> Lade ein Exposé hoch und sieh in zwei Minuten, ob nach Bankrate und Hausgeld ein Plus bleibt.</p>
+    <a class="btn primary" id="exposeLink" href="#">Zum Exposé-Check</a>
+  </section>
+
+  <section class="cta">
+    <h2>Lass uns draufschauen</h2>
+    <p>Im kostenlosen Kennenlerngespräch schauen wir, ob und wie du finanzierbar bist, bevor du irgendetwas zahlst.</p>
+    <a class="btn primary" id="ctaLink" href="#">Kennenlerngespräch buchen</a>
+  </section>
+
+  <p class="legal">Dieser Check ist eine allgemeine Einschätzung und ersetzt keine Finanz- oder Steuerberatung. Jede Bank rechnet anders. Deine Angaben bleiben in deinem Browser, gespeichert wird nur, was du unter Schritt 4 einträgst, zusammen mit deinem Ergebnis.</p>
+  <div class="foot"><a id="imLink" href="#">Impressum</a><a id="dsLink2" href="#">Datenschutz</a></div>
+</main>
+
+<script>
+/* ===== EINSTELLUNGEN ===== */
+const CONFIG = {
+  kennenlernLink: "",   // z. B. https://calendly.com/...
+  impressumLink: "",
+  datenschutzLink: "",
+  exposeCheckLink: "", // Adresse des Exposé-Checks, sobald er online ist
+  preview: false,       // true = Vorschau ohne Versand; false = echte Anmeldung über /api/subscribe
+};
+/* Schwellen (intern, werden nirgends angezeigt) */
+const T = {
+  nettoGut: 3000, nettoOk: 2500, sparAusgleich: 50000,
+  restQuote: 0.2, restMin: 400, restFast: 150,
+  sparGut: 15000, sparFast: 5000,
+  ratenQuoteFehlt: 0.25,
+  zeitGut: 5, zeitMin: 2,
+};
+/* ========================= */
+
+const $ = (id) => document.getElementById(id);
+const eur = (n) => Math.round(n).toLocaleString("de-DE");
+const state = {};
+
+/* Regler aufbauen: Regler und Zahlenfeld sind gekoppelt */
+document.querySelectorAll(".sl").forEach((el) => {
+  const key = el.dataset.key, r = el.querySelector("input[type=range]"), t = el.querySelector(".val input");
+  r.min = el.dataset.min; r.max = el.dataset.max; r.step = el.dataset.step; r.value = el.dataset.val;
+  const paint = () => r.style.setProperty("--p", ((r.value - r.min) / (r.max - r.min)) * 100 + "%");
+  const set = (v, from) => {
+    v = Math.max(0, Math.round(Number(v) || 0)); state[key] = v;
+    if (from !== "range") { r.value = Math.min(v, Number(r.max)); }
+    if (from !== "text") t.value = eur(v);
+    paint(); compute();
+  };
+  r.addEventListener("input", () => set(r.value, "range"));
+  t.addEventListener("input", () => set(t.value.replace(/\D/g, ""), "text"));
+  t.addEventListener("blur", () => (t.value = eur(state[key])));
+  state[key] = Number(el.dataset.val); t.value = eur(state[key]); paint();
+});
+document.querySelectorAll(".chips").forEach((el) => {
+  const key = el.dataset.key;
+  const multi = el.querySelector("input[type=checkbox]");
+  const read = () => (state[key] = multi ? [...el.querySelectorAll("input:checked")].map((i) => i.value) : el.querySelector("input:checked").value);
+  el.addEventListener("change", (ev) => {
+    if (multi) { // "Weiß ich noch nicht" schließt die anderen Antworten aus
+      const offen = el.querySelector("input[value=offen]");
+      if (ev.target === offen && offen.checked) el.querySelectorAll("input").forEach((i) => { if (i !== offen) i.checked = false; });
+      else if (ev.target !== offen && ev.target.checked) offen.checked = false;
+    }
+    read(); compute();
+  });
+  read();
+});
+
+/* Bewertung: fünf Bereiche, jeweils ok / fast / fehlt, dazu ein Satz fürs Ergebnis und ein Schritt für den Plan */
+function evaluate(s) {
+  const A = [];
+
+  // 1 Gehalt und Job
+  let a;
+  if (s.job === "probe") a = ["fehlt", "Mit Probezeit oder Befristung winken die meisten Banken ab.",
+    "Warte die Probezeit ab", "Die meisten Banken finanzieren erst mit festem Vertrag. Nutz die Zeit bis dahin für alles andere auf dieser Liste, dann bist du am ersten Tag nach der Probezeit bereit."];
+  else if (s.netto < T.nettoOk && s.spar < T.sparAusgleich) a = ["fehlt", "Mit diesem Gehalt wird es bei der Bank eng.",
+    "Mehr Einkommen oder mehr Erspartes", "Die Bank schaut zuerst aufs Gehalt. Entweder es kommt ein Nebeneinkommen dazu oder du baust Eigenkapital auf. Beides geht, beides braucht Zeit. Vom Himmel fallen wird's nicht."];
+  else if (s.netto < T.nettoOk) a = ["fast", "Dein Erspartes gleicht einiges aus.",
+    "Gehalt und Erspartes zusammen zeigen", "Die Bank schaut genau aufs Gehalt, dein Erspartes macht dich aber deutlich interessanter. Rechne durch, ob ein kleines Nebeneinkommen drin ist, das stärkt deine Position zusätzlich."];
+  else if (s.job === "selbst") a = ["fast", "Als Selbstständige will die Bank mehr Unterlagen sehen.",
+    "Jahresabschlüsse vorbereiten", "Banken wollen bei Selbstständigen meist die letzten zwei bis drei Jahresabschlüsse sehen. Sprich früh mit deiner Steuerberatung, damit die Zahlen bei der Bank gut aussehen."];
+  else if (s.netto < T.nettoGut) a = ["fast", "Für eine Finanzierung reicht das oft. Für 110 % wird es eng.",
+    "Polster aufbauen", "Mit deinem Gehalt finanzieren viele Banken, bei 110 % wird es aber knapp. Mit etwas Erspartem im Rücken sieht die Bank das entspannter."];
+  else a = ["ok", "Damit nimmt dich die Bank ernst."];
+  A.push({ name: "Gehalt und Job", st: a[0], why: a[1], step: a[2], tip: a[3] });
+
+  // 2 Was übrig bleibt
+  const restGut = Math.max(T.restMin, s.netto * T.restQuote);
+  if (s.rest >= restGut) a = ["ok", "Genau das will die Bank sehen."];
+  else if (s.rest >= T.restFast) a = ["fast", "Da geht noch was.",
+    "Kontoauszug durchgehen", "Nimm dir die letzten drei Kontoauszüge und markier die größten Posten. Frag dich bei jedem, ob er sein muss. Je mehr am Monatsende übrig bleibt, desto höher darf deine Bankrate sein."];
+  else a = ["fehlt", "Am Monatsende bleibt zu wenig übrig. Das sieht die Bank als Erstes.",
+    "Haushaltsbuch anfangen", "Schreib einen Monat lang jede Ausgabe auf. Ich wusste am Anfang auch nicht, wie man ein Haushaltsbuch führt. Danach weißt du genau, wo dein Geld hingeht und wo du einsparen kannst."];
+  A.push({ name: "Was übrig bleibt", st: a[0], why: a[1], step: a[2], tip: a[3] });
+
+  // 3 Polster
+  if (s.spar >= T.sparGut) a = ["ok", "Du hast ein Polster. Das beruhigt die Bank und dich."];
+  else if (s.spar >= T.sparFast) a = ["fast", "Ein Anfang ist da.",
+    "Polster weiter aufbauen", "Bei 110 % zahlt die Bank auch die Kaufnebenkosten. Für die kaputte Therme oder einen Monat ohne Mieter brauchst du trotzdem Rücklagen. Leg jeden Monat einen festen Betrag zur Seite, direkt wenn das Gehalt kommt."];
+  else a = ["fehlt", "Für die erste Reparatur fehlt dir noch ein Polster.",
+    "Dauerauftrag einrichten", "Bei 110 % zahlt die Bank auch die Kaufnebenkosten. Eine Wohnung bringt aber Überraschungen mit, und die zahlst du selbst. Richte einen Dauerauftrag auf ein eigenes Konto ein, gleich am Tag nach dem Gehalt."];
+  A.push({ name: "Dein Polster", st: a[0], why: a[1], step: a[2], tip: a[3] });
+
+  // 4 Schulden und Schufa
+  if (s.schufa === "ja") a = ["fehlt", "Ein negativer Eintrag ist bei den meisten Banken ein klares Nein.",
+    "Schufa-Eintrag klären", "Kümmer dich zuerst darum, dass der Eintrag erledigt ist und gelöscht wird. Vorher brauchst du keinen Banktermin."];
+  else if (s.raten >= s.netto * T.ratenQuoteFehlt && s.raten > 0) a = ["fehlt", "Deine Raten fressen einen großen Teil vom Gehalt.",
+    "Kleine Kredite ablösen", "Jede Rate rechnet die Bank gegen dich. Zahl zuerst die kleinen Kredite ab, vor allem den Dispo, und kauf nichts Neues auf Raten."];
+  else if (s.raten > 0) a = ["fast", "Die Bank rechnet jede Rate gegen dich.",
+    "Raten abbauen", "Wenn du kleine Kredite schnell ablösen kannst, mach das vor dem Banktermin. Jede Rate weniger macht mehr Bankrate möglich."];
+  else if (s.schufa === "weiss") a = ["fast", "Schau nach, bevor die Bank es tut.",
+    "Schufa-Auskunft holen", "Die Selbstauskunft bei der Schufa bekommst du einmal im Jahr kostenlos. Dann weißt du, was die Bank sieht, bevor du hingehst."];
+  else a = ["ok", "Keine Raten, keine Einträge. Sehr gut."];
+  A.push({ name: "Schulden und Schufa", st: a[0], why: a[1], step: a[2], tip: a[3] });
+
+  // 5 Überblick und Zeit
+  if (s.ueberblick === "nein" || s.zeit < T.zeitMin) a = ["fehlt",
+    s.ueberblick === "nein" ? "Ohne Überblick über dein Geld kannst du der Bank nichts zeigen." : "Eine Wohnung kauft sich nicht nebenbei.",
+    s.ueberblick === "nein" ? "Mit dem Kontoauszug anfangen" : "Feste Zeit einplanen",
+    s.ueberblick === "nein" ? "Fang mit deinem Kontoauszug an. Ein Monat reicht für den Anfang. Ohne diese Zahlen kommst du bei der Bank nicht weit." : "Am Anfang brauchst du ein paar Stunden pro Woche, allein für Bankgespräche und Besichtigungen. Immobilien sind kein passives Einkommen. Such dir zwei feste Abende, die dafür reserviert sind."];
+  else if (s.ueberblick === "grob" || s.zeit < T.zeitGut) a = ["fast", "Fast. Ein bisschen genauer und ein bisschen mehr Zeit.",
+    "Zahlen auf den Euro genau", "Die Bank will deine Einnahmen und Ausgaben schwarz auf weiß sehen. Mach aus deinem groben Gefühl eine Haushaltsrechnung, die du jeder Bank auf den Tisch legen kannst."];
+  else a = ["ok", "Du kennst deine Zahlen und hast Zeit dafür."];
+  A.push({ name: "Überblick und Zeit", st: a[0], why: a[1], step: a[2], tip: a[3] });
+
+  const fehlt = A.filter((x) => x.st === "fehlt").length, fast = A.filter((x) => x.st === "fast").length;
+  let v;
+  if (fehlt === 0 && fast <= 1) v = ["good", "Startklar", "Mit diesen Zahlen kannst du zur Bank gehen. Jetzt lohnt es sich, echte Wohnungen durchzurechnen."];
+  else if (fehlt <= 1) v = ["warn", "Fast startklar", "Ein paar Stellschrauben fehlen noch. Die kannst du in den nächsten Monaten drehen, und dann geht's los."];
+  else v = ["todo", "Erst das Fundament", "Heute würde ich noch keine Wohnung anschauen. Kopf in den Sand stecken bringt aber nichts: Mit den Schritten unten stehst du in ein paar Monaten ganz woanders."];
+  return { areas: A, verdict: v, ok: A.length - fehlt - fast };
+}
+
+const PILL = { ok: "passt", fast: "fast", fehlt: "fehlt noch" };
+let last, unlocked = false;
+function compute() {
+  last = evaluate(state);
+  const [cls, big, text] = last.verdict;
+  $("verdict").className = "verdict " + cls;
+  $("vBig").textContent = big;
+  $("vText").textContent = text;
+  $("meter").innerHTML = last.areas.map((_, i) => `<i class="${i < last.ok ? "on" : ""}"></i>`).join("");
+  $("areas").innerHTML = last.areas.map((x) =>
+    `<li><b>${x.name}</b><span class="pill ${x.st}">${PILL[x.st]}</span><span class="why">${x.why}</span></li>`).join("");
+  $("nextExpose").dataset.show = cls === "todo" ? "" : "1";
+  if (unlocked) $("nextExpose").hidden = cls === "todo";
+  renderPlan();
+}
+const ZIEL = {
+  rente: "Dein Ziel ist die Altersvorsorge. Das ist ein Long Game: Je früher du startest, desto länger zahlen deine Mieter den Kredit für dich ab.",
+  frei: "Du willst finanziell unabhängig werden. Dafür braucht es mehr als eine Wohnung. Bei mir hat es mit einer einzigen angefangen, und die war total überteuert.",
+  extra: "Du willst ein zweites Einkommen. Ehrlich gerechnet bringt eine Wohnung am Anfang 100 oder 200 € im Monat. Interessant wird es, wenn du das wiederholst.",
+  vermoegen: "Du willst eigenes Vermögen aufbauen. Die Bank finanziert die Wohnung, die Miete zahlt den Kredit, und Jahr für Jahr gehört dir ein größerer Teil davon.",
+  offen: "Dein Ziel ist noch offen. Das ist okay. Im Kennenlerngespräch klären wir als Erstes, wofür du das eigentlich machst.",
+};
+function renderPlan() {
+  $("zielText").textContent = (state.ziel || []).map((z) => ZIEL[z]).join(" ");
+  const todo = last.areas.filter((x) => x.st !== "ok").sort((a, b) => (a.st === "fehlt" ? -1 : 0) - (b.st === "fehlt" ? -1 : 0));
+  const items = todo.map((x) => `<li><b>${x.step}</b><span>${x.tip}</span></li>`);
+  if (last.verdict[0] === "good") items.push(`<li><b>Erste Wohnung durchrechnen</b><span>Bevor du irgendwo anrufst, rechnest du: Kaltmiete minus Bankrate minus nicht umlagefähiges Hausgeld. Bleibt ein Plus, schaust du genauer hin. Genau das macht der Exposé-Check für dich.</span></li>`);
+  if (!todo.length && last.verdict[0] !== "good") items.push(`<li><b>Alles im grünen Bereich</b><span>Melde dich, dann schauen wir zusammen auf die nächsten Schritte.</span></li>`);
+  $("plan").innerHTML = items.join("");
+}
+
+async function submitGate(ev) {
+  ev.preventDefault();
+  const mail = $("gMail").value.trim(), name = $("gName").value.trim(), msg = $("gMsg");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { msg.textContent = "Bitte gib eine gültige E-Mail-Adresse ein."; return; }
+  if (!$("gOk").checked) { msg.textContent = "Bitte setz noch den Haken, damit ich dir den Plan schicken darf."; return; }
+  if (!CONFIG.preview) {
+    msg.textContent = "Einen Moment …";
+    try {
+      const res = await fetch("/api/subscribe", { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: mail, name, consent: true, result: { ziel: state.ziel, verdict: last.verdict[0], areas: last.areas.map(({ name, st, why, step, tip }) => ({ name, st, why, step, tip })), zielText: $("zielText").textContent } }) });
+      if (!res.ok) throw new Error();
+    } catch { msg.textContent = "Das hat nicht geklappt. Versuch es bitte gleich nochmal."; return; }
+  }
+  unlocked = true;
+  $("gate").hidden = true; $("ergCard").hidden = false; $("planCard").hidden = false;
+  $("nextExpose").hidden = !$("nextExpose").dataset.show;
+  $("planCard").insertAdjacentHTML("beforeend", `<p class="note">${CONFIG.preview ? "Vorschau: In der echten Version kommt jetzt eine Mail zum Bestätigen, danach der Plan per Mail." : "Schau in dein Postfach und bestätige deine Adresse. Danach schicke ich dir den Plan auch per Mail."}</p>`);
+  $("ergCard").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+const link = (id, url) => { if (url) $(id).href = url; };
+link("ctaLink", CONFIG.kennenlernLink); link("imLink", CONFIG.impressumLink); link("dsLink2", CONFIG.datenschutzLink); link("dsLink1", CONFIG.datenschutzLink); link("exposeLink", CONFIG.exposeCheckLink);
+$("proto").hidden = !CONFIG.preview;
+$("gateForm").addEventListener("submit", submitGate);
+compute();
+</script>
+</body>
+</html>
