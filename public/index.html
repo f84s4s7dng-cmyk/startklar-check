@@ -13,9 +13,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/icon.png">
 <link rel="apple-touch-icon" href="/icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap">
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>
 /* Eine schmale Spalte wie eine App am Handy: 1 Dein Geld, 2 Du und die Bank, 3 Ergebnis, dann Plan per Mail */
 :root{
@@ -254,8 +252,8 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 /* ===== EINSTELLUNGEN ===== */
 const CONFIG = {
   kennenlernLink: "",   // z. B. https://calendly.com/...
-  impressumLink: "",
-  datenschutzLink: "",
+  impressumLink: "/impressum.html",
+  datenschutzLink: "/datenschutz.html",
   exposeCheckLink: "", // Adresse des Exposé-Checks, sobald er online ist
   preview: false,       // true = Vorschau ohne Versand; false = echte Anmeldung über /api/subscribe
 };
