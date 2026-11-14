@@ -51,7 +51,7 @@ function clean(r) {
 
 function resultMail(name, r) {
   const [bg, fg, label] = VERDICT[r.verdict];
-  const kennenlern = process.env.KENNENLERN_LINK, expose = process.env.EXPOSE_CHECK_LINK;
+  const kennenlern = process.env.KENNENLERN_LINK || "https://www.instagram.com/juttareichenbach/", ctaText = process.env.KENNENLERN_LINK ? "Kennenlerngespräch buchen" : "Schreib mir auf Instagram", expose = process.env.EXPOSE_CHECK_LINK;
   const todo = r.areas.filter((a) => a.st !== "ok").sort((a, b) => (a.st === "fehlt" ? -1 : 0) - (b.st === "fehlt" ? -1 : 0));
   const btn = (href, text) => `<p style="margin:20px 0"><a href="${esc(href)}" style="background:#EDC313;color:#1D2B3A;padding:12px 16px;border-radius:8px;text-decoration:none;font-weight:bold">${text}</a></p>`;
   return `<!doctype html><html><body style="margin:0;background:#FAF6EC;font-family:Arial,Helvetica,sans-serif;color:#1D2B3A">
@@ -70,7 +70,7 @@ ${r.areas.map((a) => `<tr><td style="padding:8px 0;border-bottom:1px solid #E6DC
 ${r.zielText ? `<p style="font-size:14px">${esc(r.zielText)}</p>` : ""}
 ${todo.length ? `<ol style="padding-left:20px;font-size:14px">${todo.map((a) => `<li style="margin-bottom:10px"><b>${esc(a.step)}</b><br>${esc(a.tip)}</li>`).join("")}</ol>` : `<p style="font-size:14px">Alles passt. Jetzt lohnt es sich, echte Wohnungen durchzurechnen.</p>`}
 ${expose && r.verdict !== "todo" ? btn(expose, "Zum Exposé-Check") : ""}
-${kennenlern ? `<p style="font-size:14px">Du willst wissen, ob und wie du finanzierbar bist? Im kostenlosen Kennenlerngespräch schauen wir drauf, bevor du irgendetwas zahlst.</p>${btn(kennenlern, "Kennenlerngespräch buchen")}` : ""}
+${kennenlern ? `<p style="font-size:14px">Du willst wissen, ob und wie du finanzierbar bist? Im kostenlosen Kennenlerngespräch schauen wir drauf, bevor du irgendetwas zahlst. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.</p>${btn(kennenlern, ctaText)}` : ""}
 <p>Viele Grüße<br>Jutta</p>
 <p style="font-size:11px;color:#5A6573">Allgemeine Einschätzung, ersetzt keine Finanz- oder Steuerberatung. Jede Bank rechnet anders.</p>
 </div></body></html>`;
