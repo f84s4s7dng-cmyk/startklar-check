@@ -82,15 +82,20 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 /* Ergebnis */
 .verdict{border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:8px}
 .verdict.good{background:#15253A;color:#FAF6EC}
-.verdict.good .big{color:#F4C430}
+.verdict.good .big{color:#FAF6EC}
 .verdict.warn{background:#D3DFD1;color:#15253A}
 .verdict.todo{background:#9FB4A0;color:#15253A}
 .verdict .lbl{font:700 11.5px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.85}
 .verdict .big{font:800 40px/1.05 var(--display);letter-spacing:-.01em}
 .verdict p{margin:0;font-size:15px}
-.meter{display:flex;gap:4px}
-.meter i{flex:1;height:8px;border-radius:4px;background:currentColor;opacity:.25}
-.meter i.on{opacity:1}
+.meter{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:6px 0 4px}
+.meter div{display:flex;flex-direction:column;gap:7px}
+.meter i{display:block;height:12px;border-radius:6px;background:rgba(21,37,58,.14)}
+.meter span{font:500 12.5px/1.2 var(--body);opacity:.7}
+.meter .on i{background:#F4C430;box-shadow:inset 0 0 0 2px #15253A}
+.meter .on span{font-weight:700;opacity:1}
+.verdict.good .meter i{background:rgba(250,246,236,.22)}
+.verdict.good .meter .on i{background:#F4C430;box-shadow:none}
 .areas{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .areas li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--bg)}
 .areas b{font-size:15px}
@@ -226,7 +231,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
     <div class="verdict" id="verdict">
       <div class="lbl">Dein Ergebnis</div>
       <div class="big" id="vBig"></div>
-      <div class="meter" id="meter" aria-hidden="true"></div>
+      <div class="meter" id="meter"></div>
       <p id="vText"></p>
     </div>
     <ul class="areas" id="areas" hidden></ul>
@@ -377,7 +382,7 @@ function evaluate(s) {
   let v;
   if (fehlt === 0 && fast <= 1) v = ["good", "Startklar", "Mit diesen Zahlen kannst du zur Bank gehen. Jetzt lohnt es sich, echte Wohnungen durchzurechnen."];
   else if (fehlt <= 1) v = ["warn", "Fast startklar", "Ein paar Stellschrauben fehlen noch. Die kannst du in den nächsten Monaten drehen, und dann geht's los."];
-  else v = ["todo", "Erst das Fundament", "Heute würde ich noch keine Wohnung anschauen. Kopf in den Sand stecken bringt aber nichts: Mit den Schritten unten stehst du in ein paar Monaten ganz woanders."];
+  else v = ["todo", "Du hast ein Fundament", "Darauf kannst du aufbauen. Für eine Wohnung ist es heute noch zu früh. Mit deinem Plan aus der Mail stehst du in ein paar Monaten ganz woanders."];
   return { areas: A, verdict: v, ok: A.length - fehlt - fast };
 }
 
@@ -389,7 +394,9 @@ function compute() {
   $("verdict").className = "verdict " + cls;
   $("vBig").textContent = big;
   $("vText").textContent = text;
-  $("meter").innerHTML = last.areas.map((_, i) => `<i class="${i < last.ok ? "on" : ""}"></i>`).join("");
+  $("meter").innerHTML = [["todo", "Fundament"], ["warn", "Fast startklar"], ["good", "Startklar"]]
+    .map(([k, t]) => `<div class="${k === cls ? "on" : ""}"><i></i><span>${t}</span></div>`).join("");
+  $("meter").setAttribute("aria-label", `Stufe ${["todo", "warn", "good"].indexOf(cls) + 1} von 3: ${big}`);
   $("areas").innerHTML = last.areas.map((x) =>
     `<li><b>${x.name}</b><span class="pill ${x.st}">${PILL[x.st]}</span><span class="why">${x.why}</span></li>`).join("");
   $("nextExpose").dataset.show = cls === "todo" ? "" : "1";
