@@ -1,8 +1,8 @@
 # Startklar-Check
 
-Kostenloses Tool (Freebie) von Jutta Reichenbach: „Bist du startklar für deine erste Immobilie?“ Neun Fragen mit Schiebereglern und Antworten zum Antippen. Nach Eingabe der E-Mail-Adresse (Double-Opt-in über Brevo) sieht man das Ergebnis in fünf Bereichen und einen Plan mit den nächsten Schritten. Den Plan gibt es zusätzlich per Mail. Wer startklar oder fast startklar ist, wird zum Exposé-Check weitergeleitet.
+Kostenloses Tool (Freebie) von Jutta Reichenbach: „Bist du startklar für deine erste Immobilie?“ Neun Fragen mit Schiebereglern und Antworten zum Antippen. Nach Eingabe der E-Mail-Adresse (Double-Opt-in über Brevo) sieht man das Ergebnis in fünf Bereichen und einen Plan mit den nächsten Schritten. Den Plan gibt es zusätzlich per Mail, und zwar erst nachdem die Anmeldung über den Link in der Bestätigungsmail bestätigt ist. Wer startklar oder fast startklar ist, wird zum Exposé-Check weitergeleitet.
 
-Die Angaben werden im Browser ausgewertet. Gespeichert wird nur, was in Brevo landet: Vorname, E-Mail, gewählte Ziele, Ergebnis.
+Die Angaben werden im Browser ausgewertet. Gespeichert wird nur, was in Brevo landet: Vorname, E-Mail, gewählte Ziele, Ergebnis. Bis zur Bestätigung liegt das Ergebnis kurz in Netlify Blobs (Speicher „ergebnisse“) und wird nach dem Versand gelöscht, unbestätigte Einträge nach 30 Tagen.
 
 ## Aufbau
 
@@ -11,7 +11,11 @@ Die Angaben werden im Browser ausgewertet. Gespeichert wird nur, was in Brevo la
 | `public/index.html` | Die App. Oben im Skript stehen unter `CONFIG` die Links (Kennenlerngespräch, Impressum, Datenschutz, Exposé-Check), darunter unter `T` die internen Grenzwerte. |
 | `public/danke.html` | Seite nach dem Bestätigen der Anmeldung |
 | `public/og.png`, `public/icon.png` | Vorschaubild für geteilte Links und App-Symbol |
-| `netlify/functions/subscribe.mjs` | Trägt die Adresse mit Double-Opt-in in Brevo ein und schickt die Ergebnis-Mail |
+| `netlify/functions/subscribe.mjs` | Trägt die Adresse mit Double-Opt-in in Brevo ein und merkt sich das Ergebnis. Ist die Adresse schon bestätigt in der Liste, geht die Ergebnis-Mail sofort raus |
+| `netlify/functions/confirm.mjs` | Wird von der Danke-Seite nach dem Bestätigungsklick aufgerufen und schickt dann die Ergebnis-Mail |
+| `netlify/functions/cleanup.mjs` | Löscht täglich unbestätigte Einträge, die älter als 30 Tage sind |
+| `netlify/lib/startklar.mjs` | Gemeinsame Teile: Brevo-Aufrufe und die Ergebnis-Mail |
+| `bestaetigungsmail-brevo.html` | Vorlage für die Bestätigungsmail, wird in Brevo eingefügt |
 | `netlify.toml` | Einstellungen für Netlify |
 
 ## Einstellungen in Netlify (Site configuration → Environment variables)

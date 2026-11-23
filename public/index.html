@@ -412,18 +412,20 @@ async function submitGate(ev) {
   const mail = $("gMail").value.trim(), name = $("gName").value.trim(), msg = $("gMsg");
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { msg.textContent = "Bitte gib eine gültige E-Mail-Adresse ein."; return; }
   if (!$("gOk").checked) { msg.textContent = "Bitte setz noch den Haken, damit ich dir den Plan schicken darf."; return; }
+  let confirmed = false;
   if (!CONFIG.preview) {
     msg.textContent = "Einen Moment …";
     try {
       const res = await fetch("/api/subscribe", { method: "POST", headers: { "content-type": "application/json" },
         body: JSON.stringify({ email: mail, name, consent: true, result: { ziel: state.ziel, verdict: last.verdict[0], areas: last.areas.map(({ name, st, why, step, tip }) => ({ name, st, why, step, tip })), zielText: $("zielText").textContent } }) });
       if (!res.ok) throw new Error();
+      confirmed = !!(await res.json().catch(() => ({}))).confirmed;
     } catch { msg.textContent = "Das hat nicht geklappt. Versuch es bitte gleich nochmal."; return; }
   }
   unlocked = true;
   $("gate").hidden = true; $("ergCard").hidden = false; $("planCard").hidden = false;
   $("nextExpose").hidden = !$("nextExpose").dataset.show;
-  $("planCard").insertAdjacentHTML("beforeend", `<p class="note">${CONFIG.preview ? "Vorschau: In der echten Version kommt jetzt eine Mail zum Bestätigen, danach der Plan per Mail." : "Schau in dein Postfach und bestätige deine Adresse. Danach schicke ich dir den Plan auch per Mail."}</p>`);
+  $("planCard").insertAdjacentHTML("beforeend", `<p class="note">${CONFIG.preview ? "Vorschau: In der echten Version kommt jetzt eine Mail zum Bestätigen, danach der Plan per Mail." : (confirmed ? "Deinen Plan habe ich dir auch per Mail geschickt." : "Schau in dein Postfach und klick in meiner Mail auf „Ja, ich bin dabei“. Danach schicke ich dir den Plan auch per Mail.")}</p>`);
   $("ergCard").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
