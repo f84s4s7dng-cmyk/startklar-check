@@ -382,7 +382,7 @@ function evaluate(s) {
   let v;
   if (fehlt === 0 && fast <= 1) v = ["good", "Startklar", "Mit diesen Zahlen kannst du zur Bank gehen. Jetzt lohnt es sich, echte Wohnungen durchzurechnen."];
   else if (fehlt <= 1) v = ["warn", "Fast startklar", "Ein paar Stellschrauben fehlen noch. Die kannst du in den nächsten Monaten drehen, und dann geht's los."];
-  else v = ["todo", "Erst das Fundament", "Heute würde ich noch keine Wohnung anschauen. Kopf in den Sand stecken bringt aber nichts: Mit deinem Plan aus der Mail stehst du in ein paar Monaten ganz woanders."];
+  else v = ["todo", "Du hast ein Fundament", "Darauf kannst du aufbauen. Für eine Wohnung ist es heute noch zu früh. Mit deinem Plan aus der Mail stehst du in ein paar Monaten ganz woanders."];
   return { areas: A, verdict: v, ok: A.length - fehlt - fast };
 }
 

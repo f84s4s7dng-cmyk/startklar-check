@@ -9,7 +9,7 @@ export const ZIELE = { rente: "Altersvorsorge", frei: "Finanzielle Unabhängigke
 export const VERDICT = {
   good: ["#15253A", "#F4C430", "Startklar"],
   warn: ["#D3DFD1", "#15253A", "Fast startklar"],
-  todo: ["#9FB4A0", "#15253A", "Erst das Fundament"],
+  todo: ["#9FB4A0", "#15253A", "Du hast ein Fundament"],
 };
 export const PILL = { ok: ["passt", "#DDEBE1", "#2F7A4F"], fast: ["fast", "#FBEFC2", "#6A5200"], fehlt: ["fehlt noch", "#D3DFD1", "#15253A"] };
 
