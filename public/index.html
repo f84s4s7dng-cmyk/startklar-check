@@ -211,7 +211,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
   <section class="card gate" id="gate" aria-labelledby="h-gate">
     <div class="stephead"><span class="num">4</span><h2 id="h-gate">Dein Ergebnis</h2></div>
-    <p style="margin:0">Wo du heute stehst, und für jeden Punkt, der noch nicht passt, was du als Nächstes tust. Du siehst alles sofort hier und bekommst es zusätzlich per Mail.</p>
+    <p style="margin:0">Hier siehst du sofort, wo du heute stehst. Wie es in deinen fünf Bereichen aussieht und was du als Nächstes tust, schicke ich dir per Mail.</p>
     <form id="gateForm" novalidate>
       <input type="text" id="gName" placeholder="Vorname" autocomplete="given-name">
       <input type="email" id="gMail" placeholder="E-Mail-Adresse" autocomplete="email" required>
@@ -229,8 +229,8 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
       <div class="meter" id="meter" aria-hidden="true"></div>
       <p id="vText"></p>
     </div>
-    <ul class="areas" id="areas"></ul>
-    <p class="key"><span><span class="pill ok">passt</span> sieht die Bank gern</span><span><span class="pill fast">fast</span> kleine Stellschraube</span><span><span class="pill fehlt">fehlt noch</span> hier fängst du an</span></p>
+    <ul class="areas" id="areas" hidden></ul>
+    <p class="key" id="areaKey" hidden><span><span class="pill ok">passt</span> sieht die Bank gern</span><span><span class="pill fast">fast</span> kleine Stellschraube</span><span><span class="pill fehlt">fehlt noch</span> hier fängst du an</span></p>
   </section>
 
 
@@ -238,6 +238,11 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
     <h2 id="h-plan">Dein Plan</h2>
     <p id="zielText" style="margin:0"></p>
     <ol class="plan" id="plan"></ol>
+  </section>
+
+  <section class="card" id="mailCard" hidden aria-labelledby="h-mail">
+    <h2 id="h-mail">Dein Plan kommt per Mail</h2>
+    <p id="mailText" style="margin:0"></p>
   </section>
 
   <section class="next" id="nextExpose" data-gated hidden>
@@ -423,9 +428,13 @@ async function submitGate(ev) {
     } catch { msg.textContent = "Das hat nicht geklappt. Versuch es bitte gleich nochmal."; return; }
   }
   unlocked = true;
-  $("gate").hidden = true; $("ergCard").hidden = false; $("planCard").hidden = false;
+  $("gate").hidden = true; $("ergCard").hidden = false; $("mailCard").hidden = false;
   $("nextExpose").hidden = !$("nextExpose").dataset.show;
-  $("planCard").insertAdjacentHTML("beforeend", `<p class="note">${CONFIG.preview ? "Vorschau: In der echten Version kommt jetzt eine Mail zum Bestätigen, danach der Plan per Mail." : (confirmed ? "Deinen Plan habe ich dir auch per Mail geschickt." : "Schau in dein Postfach und klick in meiner Mail auf „Ja, ich bin dabei“. Danach schicke ich dir den Plan auch per Mail.")}</p>`);
+  $("mailText").textContent = CONFIG.preview
+    ? "Vorschau: In der echten Version kommt jetzt eine Mail zum Bestätigen. Nach dem Klick auf „Ja, ich bin dabei“ kommt die Mail mit den fünf Bereichen und dem Plan."
+    : confirmed
+      ? "Wie es in deinen fünf Bereichen aussieht und deinen Plan habe ich dir gerade per Mail geschickt. Schau in dein Postfach."
+      : "Schau jetzt in dein Postfach und klick in meiner Mail auf „Ja, ich bin dabei“. Danach schicke ich dir, wie es in deinen fünf Bereichen aussieht, und deinen Plan.";
   $("ergCard").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
