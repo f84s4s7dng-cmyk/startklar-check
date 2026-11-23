@@ -235,7 +235,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
       <p id="vText"></p>
     </div>
     <ul class="areas" id="areas" hidden></ul>
-    <p class="key" id="areaKey" hidden><span><span class="pill ok">passt</span> sieht die Bank gern</span><span><span class="pill fast">fast</span> kleine Stellschraube</span><span><span class="pill fehlt">fehlt noch</span> hier fängst du an</span></p>
+    <p class="key" id="areaKey" hidden><span><span class="pill ok">passt</span> sieht die Bank gern</span><span><span class="pill fast">fast</span> kleine Stellschraube</span><span><span class="pill fehlt">nächster Schritt</span> hier fängst du an</span></p>
   </section>
 
 
@@ -258,7 +258,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
   <section class="cta">
     <h2>Lass uns draufschauen</h2>
-    <p>Im kostenlosen Kennenlerngespräch schauen wir, ob und wie du finanzierbar bist, bevor du irgendetwas zahlst. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.</p>
+    <p id="ctaText">Im kostenlosen Kennenlerngespräch schauen wir gemeinsam auf deine Zahlen und finden heraus, wie dein Weg zur ersten Wohnung aussieht. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.</p>
     <a class="btn primary" id="ctaLink" href="#">Schreib mir auf Instagram</a>
   </section>
 
@@ -277,11 +277,11 @@ const CONFIG = {
 };
 /* Schwellen (intern, werden nirgends angezeigt) */
 const T = {
-  nettoGut: 3000, nettoOk: 2500, sparAusgleich: 50000,
-  restQuote: 0.2, restMin: 400, restFast: 150,
-  sparGut: 15000, sparFast: 5000,
-  ratenQuoteFehlt: 0.25,
-  zeitGut: 5, zeitMin: 2,
+  nettoGut: 2500, nettoOk: 2000, sparAusgleich: 30000,
+  restQuote: 0.15, restMin: 300, restFast: 100,
+  sparGut: 10000, sparFast: 2000,
+  ratenQuoteFehlt: 0.35,
+  zeitGut: 3, zeitMin: 1,
 };
 /* ========================= */
 
@@ -326,67 +326,75 @@ function evaluate(s) {
 
   // 1 Gehalt und Job
   let a;
-  if (s.job === "probe") a = ["fehlt", "Mit Probezeit oder Befristung winken die meisten Banken ab.",
-    "Warte die Probezeit ab", "Die meisten Banken finanzieren erst mit festem Vertrag. Nutz die Zeit bis dahin für alles andere auf dieser Liste, dann bist du am ersten Tag nach der Probezeit bereit."];
-  else if (s.netto < T.nettoOk && s.spar < T.sparAusgleich) a = ["fehlt", "Mit diesem Gehalt wird es bei der Bank eng.",
-    "Mehr Einkommen oder mehr Erspartes", "Die Bank schaut zuerst aufs Gehalt. Entweder es kommt ein Nebeneinkommen dazu oder du baust Eigenkapital auf. Beides geht, beides braucht Zeit. Vom Himmel fallen wird's nicht."];
-  else if (s.netto < T.nettoOk) a = ["fast", "Dein Erspartes gleicht einiges aus.",
-    "Gehalt und Erspartes zusammen zeigen", "Die Bank schaut genau aufs Gehalt, dein Erspartes macht dich aber deutlich interessanter. Rechne durch, ob ein kleines Nebeneinkommen drin ist, das stärkt deine Position zusätzlich."];
-  else if (s.job === "selbst") a = ["fast", "Als Selbstständige will die Bank mehr Unterlagen sehen.",
-    "Jahresabschlüsse vorbereiten", "Banken wollen bei Selbstständigen meist die letzten zwei bis drei Jahresabschlüsse sehen. Sprich früh mit deiner Steuerberatung, damit die Zahlen bei der Bank gut aussehen."];
-  else if (s.netto < T.nettoGut) a = ["fast", "Für eine Finanzierung reicht das oft. Für 110 % wird es eng.",
-    "Polster aufbauen", "Mit deinem Gehalt finanzieren viele Banken, bei 110 % wird es aber knapp. Mit etwas Erspartem im Rücken sieht die Bank das entspannter."];
+  if (s.job === "probe") a = ["fast", "Sobald dein Vertrag fest ist, kann es losgehen.",
+    "Die Zeit bis dahin nutzen", "Viele Banken finanzieren, sobald die Probezeit vorbei oder der Vertrag unbefristet ist. Bring bis dahin deine Unterlagen und dein Polster in Form, dann startest du direkt durch. Schreib mir, dann planen wir den Zeitpunkt zusammen."];
+  else if (s.netto < T.nettoOk && s.spar < T.sparAusgleich) a = ["fehlt", "Mit einem guten Plan kommst du auch hier zur Bank.",
+    "Einkommen oder Erspartes stärken", "Die Bank schaut zuerst aufs Gehalt. Schon ein kleines Nebeneinkommen oder ein wachsendes Sparkonto macht dich für die Bank interessanter. Welcher Weg zu dir passt, finden wir gern im Kennenlerngespräch heraus."];
+  else if (s.netto < T.nettoOk) a = ["fast", "Dein Erspartes macht dich für die Bank richtig interessant.",
+    "Mit deinem Ersparten punkten", "Zeig der Bank dein Gehalt und dein Erspartes zusammen. Das Ersparte gleicht einiges aus. Mit einem kleinen Nebeneinkommen stehst du noch stärker da."];
+  else if (s.job === "selbst") a = ["fast", "Auch Selbstständige bekommen ihre Finanzierung. Die Bank will nur mehr Unterlagen sehen.",
+    "Jahresabschlüsse bereitlegen", "Banken wollen bei Selbstständigen meist die letzten zwei bis drei Jahresabschlüsse sehen. Sprich früh mit deiner Steuerberatung, dann liegen die Zahlen fertig auf dem Tisch, wenn du sie brauchst."];
+  else if (s.netto < T.nettoGut) a = ["fast", "Mit deinem Gehalt finanzieren viele Banken.",
+    "Gehaltsnachweise bereitlegen", "Bei 110 % schaut die Bank etwas genauer hin. Leg deine Gehaltsnachweise der letzten Monate bereit und zeig, dass am Monatsende regelmäßig etwas übrig bleibt."];
   else a = ["ok", "Damit nimmt dich die Bank ernst."];
   A.push({ name: "Gehalt und Job", st: a[0], why: a[1], step: a[2], tip: a[3] });
 
   // 2 Was übrig bleibt
   const restGut = Math.max(T.restMin, s.netto * T.restQuote);
   if (s.rest >= restGut) a = ["ok", "Genau das will die Bank sehen."];
-  else if (s.rest >= T.restFast) a = ["fast", "Da geht noch was.",
-    "Kontoauszug durchgehen", "Nimm dir die letzten drei Kontoauszüge und markier die größten Posten. Frag dich bei jedem, ob er sein muss. Je mehr am Monatsende übrig bleibt, desto höher darf deine Bankrate sein."];
-  else a = ["fehlt", "Am Monatsende bleibt zu wenig übrig. Das sieht die Bank als Erstes.",
-    "Haushaltsbuch anfangen", "Schreib einen Monat lang jede Ausgabe auf. Ich wusste am Anfang auch nicht, wie man ein Haushaltsbuch führt. Danach weißt du genau, wo dein Geld hingeht und wo du einsparen kannst."];
+  else if (s.rest >= T.restFast) a = ["fast", "Es bleibt schon etwas übrig. Mit ein paar Handgriffen wird es mehr.",
+    "Kontoauszug durchgehen", "Nimm dir die letzten drei Kontoauszüge und markier die größten Posten. Oft findest du schnell ein paar Euro, die du gar nicht vermisst. Jeder Euro mehr am Monatsende macht eine höhere Bankrate möglich."];
+  else a = ["fehlt", "Hier liegt dein größter Hebel.",
+    "Einen Monat mitschreiben", "Schreib einen Monat lang jede Ausgabe auf. Ich wusste am Anfang auch nicht, wie man ein Haushaltsbuch führt. Danach siehst du genau, wo dein Geld hingeht und wo noch Luft ist."];
   A.push({ name: "Was übrig bleibt", st: a[0], why: a[1], step: a[2], tip: a[3] });
 
   // 3 Polster
   if (s.spar >= T.sparGut) a = ["ok", "Du hast ein Polster. Das beruhigt die Bank und dich."];
-  else if (s.spar >= T.sparFast) a = ["fast", "Ein Anfang ist da.",
-    "Polster weiter aufbauen", "Bei 110 % zahlt die Bank auch die Kaufnebenkosten. Für die kaputte Therme oder einen Monat ohne Mieter brauchst du trotzdem Rücklagen. Leg jeden Monat einen festen Betrag zur Seite, direkt wenn das Gehalt kommt."];
-  else a = ["fehlt", "Für die erste Reparatur fehlt dir noch ein Polster.",
-    "Dauerauftrag einrichten", "Bei 110 % zahlt die Bank auch die Kaufnebenkosten. Eine Wohnung bringt aber Überraschungen mit, und die zahlst du selbst. Richte einen Dauerauftrag auf ein eigenes Konto ein, gleich am Tag nach dem Gehalt."];
+  else if (s.spar >= T.sparFast) a = ["fast", "Du hast schon angefangen zu sparen. Das ist der wichtigste Schritt.",
+    "Polster weiter aufbauen", "Bei 110 % zahlt die Bank auch die Kaufnebenkosten. Für eine Reparatur oder einen Monat ohne Mieter legst du am besten jeden Monat einen festen Betrag zur Seite, direkt wenn das Gehalt kommt."];
+  else a = ["fehlt", "Dein Polster baust du ganz nebenbei auf.",
+    "Dauerauftrag einrichten", "Bei 110 % zahlt die Bank auch die Kaufnebenkosten. Für Überraschungen an der Wohnung brauchst du trotzdem eine Rücklage. Ein Dauerauftrag am Tag nach dem Gehalt reicht für den Start, auch mit einem kleinen Betrag."];
   A.push({ name: "Dein Polster", st: a[0], why: a[1], step: a[2], tip: a[3] });
 
   // 4 Schulden und Schufa
-  if (s.schufa === "ja") a = ["fehlt", "Ein negativer Eintrag ist bei den meisten Banken ein klares Nein.",
-    "Schufa-Eintrag klären", "Kümmer dich zuerst darum, dass der Eintrag erledigt ist und gelöscht wird. Vorher brauchst du keinen Banktermin."];
-  else if (s.raten >= s.netto * T.ratenQuoteFehlt && s.raten > 0) a = ["fehlt", "Deine Raten fressen einen großen Teil vom Gehalt.",
-    "Kleine Kredite ablösen", "Jede Rate rechnet die Bank gegen dich. Zahl zuerst die kleinen Kredite ab, vor allem den Dispo, und kauf nichts Neues auf Raten."];
-  else if (s.raten > 0) a = ["fast", "Die Bank rechnet jede Rate gegen dich.",
-    "Raten abbauen", "Wenn du kleine Kredite schnell ablösen kannst, mach das vor dem Banktermin. Jede Rate weniger macht mehr Bankrate möglich."];
-  else if (s.schufa === "weiss") a = ["fast", "Schau nach, bevor die Bank es tut.",
+  if (s.schufa === "ja") a = ["fehlt", "Ein negativer Eintrag lässt sich klären.",
+    "Schufa-Eintrag klären", "Kümmer dich zuerst darum, dass der Eintrag erledigt ist und gelöscht wird. Danach ist der Weg zur Bank wieder frei."];
+  else if (s.raten >= s.netto * T.ratenQuoteFehlt && s.raten > 0) a = ["fehlt", "Mit jeder Rate, die wegfällt, wächst dein Spielraum.",
+    "Kleine Kredite zuerst ablösen", "Jede Rate rechnet die Bank gegen dich. Zahl zuerst die kleinen Kredite ab, vor allem den Dispo. Jede Rate weniger macht Platz für deine Wohnung."];
+  else if (s.raten > 0) a = ["fast", "Deine Raten sind überschaubar.",
+    "Raten abbauen", "Wenn du kleine Kredite schnell ablösen kannst, mach das vor dem Banktermin. Jede Rate weniger macht eine höhere Bankrate möglich."];
+  else if (s.schufa === "weiss") a = ["fast", "Ein kurzer Blick, dann weißt du Bescheid.",
     "Schufa-Auskunft holen", "Die Selbstauskunft bei der Schufa bekommst du einmal im Jahr kostenlos. Dann weißt du, was die Bank sieht, bevor du hingehst."];
   else a = ["ok", "Keine Raten, keine Einträge. Sehr gut."];
   A.push({ name: "Schulden und Schufa", st: a[0], why: a[1], step: a[2], tip: a[3] });
 
   // 5 Überblick und Zeit
-  if (s.ueberblick === "nein" || s.zeit < T.zeitMin) a = ["fehlt",
-    s.ueberblick === "nein" ? "Ohne Überblick über dein Geld kannst du der Bank nichts zeigen." : "Eine Wohnung kauft sich nicht nebenbei.",
-    s.ueberblick === "nein" ? "Mit dem Kontoauszug anfangen" : "Feste Zeit einplanen",
-    s.ueberblick === "nein" ? "Fang mit deinem Kontoauszug an. Ein Monat reicht für den Anfang. Ohne diese Zahlen kommst du bei der Bank nicht weit." : "Am Anfang brauchst du ein paar Stunden pro Woche, allein für Bankgespräche und Besichtigungen. Immobilien sind kein passives Einkommen. Such dir zwei feste Abende, die dafür reserviert sind."];
-  else if (s.ueberblick === "grob" || s.zeit < T.zeitGut) a = ["fast", "Fast. Ein bisschen genauer und ein bisschen mehr Zeit.",
-    "Zahlen auf den Euro genau", "Die Bank will deine Einnahmen und Ausgaben schwarz auf weiß sehen. Mach aus deinem groben Gefühl eine Haushaltsrechnung, die du jeder Bank auf den Tisch legen kannst."];
+  if (s.ueberblick === "nein") a = ["fehlt", "Deine Zahlen kennenzulernen ist der einfachste erste Schritt.",
+    "Mit dem Kontoauszug anfangen", "Ein Monat reicht für den Anfang. Mit diesen Zahlen gehst du sicher ins Bankgespräch, und ich kann dir viel genauer sagen, was für dich möglich ist."];
+  else if (s.zeit < T.zeitMin) a = ["fehlt", "Ein fester Abend pro Woche reicht für den Anfang.",
+    "Feste Zeit einplanen", "Am Anfang brauchst du ein paar Stunden pro Woche für Bankgespräche und Besichtigungen. Such dir einen festen Abend aus und trag ihn dir in den Kalender ein. Den Rest gehen wir zusammen an."];
+  else if (s.ueberblick === "grob") a = ["fast", "Du hast schon einen Überblick. Jetzt geht es um die Feinarbeit.",
+    "Zahlen auf den Euro genau", "Die Bank will deine Einnahmen und Ausgaben schwarz auf weiß sehen. Mach aus deinem groben Überblick eine Haushaltsrechnung, die du jeder Bank auf den Tisch legen kannst."];
+  else if (s.zeit < T.zeitGut) a = ["fast", "Du kennst deine Zahlen. Jetzt fehlt nur noch etwas Zeit.",
+    "Feste Termine eintragen", "Mit ein paar Stunden pro Woche kommst du gut voran. Leg dir feste Termine für Besichtigungen und Bankgespräche in den Kalender."];
   else a = ["ok", "Du kennst deine Zahlen und hast Zeit dafür."];
   A.push({ name: "Überblick und Zeit", st: a[0], why: a[1], step: a[2], tip: a[3] });
 
   const fehlt = A.filter((x) => x.st === "fehlt").length, fast = A.filter((x) => x.st === "fast").length;
   let v;
-  if (fehlt === 0 && fast <= 1) v = ["good", "Startklar", "Mit diesen Zahlen kannst du zur Bank gehen. Jetzt lohnt es sich, echte Wohnungen durchzurechnen."];
-  else if (fehlt <= 1) v = ["warn", "Fast startklar", "Ein paar Stellschrauben fehlen noch. Die kannst du in den nächsten Monaten drehen, und dann geht's los."];
-  else v = ["todo", "Du hast ein Fundament", "Darauf kannst du aufbauen. Für eine Wohnung ist es heute noch zu früh. Mit deinem Plan aus der Mail stehst du in ein paar Monaten ganz woanders."];
+  if (fehlt === 0 && fast <= 2) v = ["good", "Startklar", "Mit diesen Zahlen kannst du zur Bank gehen. Jetzt geht es an deine erste Wohnung."];
+  else if (fehlt <= 2) v = ["warn", "Fast startklar", "Du bist schon richtig weit. Mit ein paar Stellschrauben bist du bald bereit für deine erste Wohnung."];
+  else v = ["todo", "Du hast ein Fundament", "Darauf baust du jetzt auf. Mit deinem Plan aus der Mail gehst du die nächsten Schritte, und ich helfe dir gern dabei."];
   return { areas: A, verdict: v, ok: A.length - fehlt - fast };
 }
 
-const PILL = { ok: "passt", fast: "fast", fehlt: "fehlt noch" };
+const CTA = {
+  good: "Deine Zahlen sind stark. Im kostenlosen Kennenlerngespräch schauen wir, welche Wohnung zu dir passt und wie deine Finanzierung aussehen kann.",
+  warn: "Die letzten Stellschrauben drehen wir am schnellsten zusammen. Im kostenlosen Kennenlerngespräch schauen wir, welche zuerst dran ist, damit du bald loslegen kannst.",
+  todo: "Dein Fundament steht. Im kostenlosen Kennenlerngespräch machen wir daraus einen Plan mit festen Etappen bis zu deiner ersten Wohnung.",
+};
+const PROOF = "Ich habe selbst mit einer einzigen Wohnung angefangen, heute sind es mehr als 20. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.";
+const PILL = { ok: "passt", fast: "fast", fehlt: "nächster Schritt" };
 let last, unlocked = false;
 function compute() {
   last = evaluate(state);
@@ -394,6 +402,7 @@ function compute() {
   $("verdict").className = "verdict " + cls;
   $("vBig").textContent = big;
   $("vText").textContent = text;
+  if (unlocked) $("ctaText").textContent = CTA[cls] + " " + PROOF;
   $("meter").innerHTML = [["todo", "Fundament"], ["warn", "Fast startklar"], ["good", "Startklar"]]
     .map(([k, t]) => `<div class="${k === cls ? "on" : ""}"><i></i><span>${t}</span></div>`).join("");
   $("meter").setAttribute("aria-label", `Stufe ${["todo", "warn", "good"].indexOf(cls) + 1} von 3: ${big}`);
@@ -429,12 +438,13 @@ async function submitGate(ev) {
     msg.textContent = "Einen Moment …";
     try {
       const res = await fetch("/api/subscribe", { method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email: mail, name, consent: true, result: { ziel: state.ziel, verdict: last.verdict[0], areas: last.areas.map(({ name, st, why, step, tip }) => ({ name, st, why, step, tip })), zielText: $("zielText").textContent } }) });
+        body: JSON.stringify({ email: mail, name, consent: true, result: { ziel: state.ziel, verdict: last.verdict[0], verdictText: last.verdict[2], areas: last.areas.map(({ name, st, why, step, tip }) => ({ name, st, why, step, tip })), zielText: $("zielText").textContent } }) });
       if (!res.ok) throw new Error();
       confirmed = !!(await res.json().catch(() => ({}))).confirmed;
     } catch { msg.textContent = "Das hat nicht geklappt. Versuch es bitte gleich nochmal."; return; }
   }
   unlocked = true;
+  $("ctaText").textContent = CTA[last.verdict[0]] + " " + PROOF;
   $("gate").hidden = true; $("ergCard").hidden = false; $("mailCard").hidden = false;
   $("nextExpose").hidden = !$("nextExpose").dataset.show;
   $("mailText").textContent = CONFIG.preview

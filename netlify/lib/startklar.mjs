@@ -11,7 +11,13 @@ export const VERDICT = {
   warn: ["#D3DFD1", "#15253A", "Fast startklar"],
   todo: ["#9FB4A0", "#15253A", "Du hast ein Fundament"],
 };
-export const PILL = { ok: ["passt", "#DDEBE1", "#2F7A4F"], fast: ["fast", "#FBEFC2", "#6A5200"], fehlt: ["fehlt noch", "#D3DFD1", "#15253A"] };
+export const CTA = {
+  good: "Deine Zahlen sind stark. Im kostenlosen Kennenlerngespräch schauen wir, welche Wohnung zu dir passt und wie deine Finanzierung aussehen kann.",
+  warn: "Die letzten Stellschrauben drehen wir am schnellsten zusammen. Im kostenlosen Kennenlerngespräch schauen wir, welche zuerst dran ist, damit du bald loslegen kannst.",
+  todo: "Dein Fundament steht. Im kostenlosen Kennenlerngespräch machen wir daraus einen Plan mit festen Etappen bis zu deiner ersten Wohnung.",
+};
+export const PROOF = "Ich habe selbst mit einer einzigen Wohnung angefangen, heute sind es mehr als 20. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.";
+export const PILL = { ok: ["passt", "#DDEBE1", "#2F7A4F"], fast: ["fast", "#FBEFC2", "#6A5200"], fehlt: ["nächster Schritt", "#D3DFD1", "#15253A"] };
 
 export async function brevo(path, body) {
   const res = await fetch(`https://api.brevo.com/v3${path}`, {
@@ -32,7 +38,7 @@ export function clean(r) {
     tip: String(a?.tip ?? "").slice(0, 600),
   }));
   const ziel = (Array.isArray(r?.ziel) ? r.ziel : []).filter((z) => ZIELE[z]);
-  return { verdict, areas, ziel, zielText: String(r?.zielText ?? "").slice(0, 1200) };
+  return { verdict, verdictText: String(r?.verdictText ?? "").slice(0, 400), areas, ziel, zielText: String(r?.zielText ?? "").slice(0, 1200) };
 }
 
 export function resultMail(name, r) {
@@ -45,10 +51,11 @@ export function resultMail(name, r) {
 <div style="background:#15253A;border-radius:12px;margin-bottom:20px;padding:18px 24px"><img src="https://startklar.juttareichenbach.com/logo-mail.png" width="240" height="44" alt="Jutta Reichenbach" style="display:block;border:0;width:240px;height:44px"></div>
 <h1 style="font-family:Outfit,Arial,Helvetica,sans-serif;font-weight:800;font-size:28px;line-height:1.1;margin:0 0 16px">Dein Startklar-Check</h1>
 <p>Hallo${name ? ` ${esc(name)}` : ""},</p>
-<p>hier ist dein Ergebnis zum Nachlesen.</p>
+<p>schön, dass du den Check gemacht hast. Hier siehst du, wo du stehst und was als Nächstes dran ist.</p>
 <div style="background:${bg};color:${fg};border-radius:12px;padding:16px 18px;margin:16px 0">
 <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${r.verdict === "good" ? "#D3DFD1" : fg}">Dein Ergebnis</div>
 <div style="font-family:Outfit,Arial,Helvetica,sans-serif;font-size:30px;font-weight:800;margin-top:6px">${label}</div>
+${r.verdictText ? `<p style="margin:8px 0 0;font-size:15px;line-height:1.5">${esc(r.verdictText)}</p>` : ""}
 </div>
 <table style="width:100%;border-collapse:collapse;font-size:14px">
 ${r.areas.map((a) => `<tr><td style="padding:8px 0;border-bottom:1px solid #E3DDCF"><b>${esc(a.name)}</b><br><span style="color:#56636F">${esc(a.why)}</span></td><td style="padding:8px 0 8px 10px;border-bottom:1px solid #E3DDCF;text-align:right;vertical-align:top"><span style="background:${PILL[a.st][1]};color:${PILL[a.st][2]};font-size:11px;font-weight:bold;text-transform:uppercase;padding:4px 6px;border-radius:999px;white-space:nowrap">${PILL[a.st][0]}</span></td></tr>`).join("")}
@@ -57,7 +64,7 @@ ${r.areas.map((a) => `<tr><td style="padding:8px 0;border-bottom:1px solid #E3DD
 ${r.zielText ? `<p style="font-size:14px">${esc(r.zielText)}</p>` : ""}
 ${todo.length ? `<ol style="padding-left:20px;font-size:14px">${todo.map((a) => `<li style="margin-bottom:10px"><b>${esc(a.step)}</b><br>${esc(a.tip)}</li>`).join("")}</ol>` : `<p style="font-size:14px">Alles passt. Jetzt lohnt es sich, echte Wohnungen durchzurechnen.</p>`}
 ${expose && r.verdict !== "todo" ? btn(expose, "Zum Exposé-Check", false) : ""}
-${kennenlern ? `<p style="font-size:14px">Du willst wissen, ob und wie du finanzierbar bist? Im kostenlosen Kennenlerngespräch schauen wir drauf, bevor du irgendetwas zahlst. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.</p>${btn(kennenlern, ctaText)}` : ""}
+${kennenlern ? `<h2 style="font-family:Outfit,Arial,Helvetica,sans-serif;font-weight:800;font-size:22px;margin:24px 0 8px">Lass uns draufschauen</h2><p style="font-size:14px">${CTA[r.verdict]} ${PROOF}</p>${btn(kennenlern, ctaText)}` : ""}
 <p>Viele Grüße<br>Jutta</p>
 <p style="font-size:11px;color:#56636F">Allgemeine Einschätzung, ersetzt keine Finanz- oder Steuerberatung. Jede Bank rechnet anders.</p>
 </div></body></html>`;
@@ -80,7 +87,7 @@ export async function sendResult(email, name, r) {
   await brevo("/smtp/email", {
     sender: { email: process.env.BREVO_SENDER_EMAIL, name: process.env.BREVO_SENDER_NAME || "Jutta Reichenbach" },
     to: [{ email }],
-    subject: "Dein Startklar-Check",
+    subject: "Dein Ergebnis und dein Plan für die erste Wohnung",
     htmlContent: resultMail(name, r),
   });
 }
