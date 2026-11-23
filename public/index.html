@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Startklar für deine erste Immobilie · Jutta Reichenbach</title>
 <meta name="description" content="Bist du bereit für deine erste vermietete Wohnung? Neun Fragen, dann weißt du, wo du stehst und was noch fehlt.">
-<meta name="theme-color" content="#1D2B3A">
+<meta name="theme-color" content="#15253A">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Bist du startklar für deine erste Immobilie?">
 <meta property="og:description" content="Neun Fragen, zwei Minuten. Dann weißt du, wo du stehst und was dir noch fehlt.">
@@ -15,39 +15,44 @@
 <link rel="apple-touch-icon" href="/icon.png">
 <link rel="stylesheet" href="/fonts/fonts.css">
 <style>
-/* Eine schmale Spalte wie eine App am Handy: 1 Dein Geld, 2 Du und die Bank, 3 Ergebnis, dann Plan per Mail */
+/* Eine schmale Spalte wie eine App am Handy: 1 Dein Geld, 2 Du und die Bank, 3 Ergebnis, dann Plan per Mail
+   Farben und Schriften nach dem Markenkit vom 22.11.2026: Navy, Creme, Salbei, Sonnengelb */
 :root{
-  --bg:#FAF6EC; --surface:#FFFFFF; --ink:#1D2B3A; --muted:#5A6573; --line:#E6DCC4;
-  --accent:#EDC313; --accent-ink:#1D2B3A; --sand:#F0E2C2; --blue:#A7BDD6; --track:#E9E1CD;
-  --good:#2F7D4F; --good-bg:#E3F1E7; --warn:#8A6100; --warn-bg:#FBF1CF; --todo:#1D2B3A; --todo-bg:#DCE5EF;
-  --display:'Barlow Condensed','Arial Narrow',sans-serif; --body:'DM Sans',system-ui,sans-serif;
+  --navy:#15253A; --cream:#FAF6EC; --sage:#9FB4A0; --sage-soft:#D3DFD1; --sun:#F4C430;
+  --bg:#FAF6EC; --surface:#FFFFFF; --ink:#15253A; --muted:#55606D; --line:#E4DFD0;
+  --accent:#F4C430; --accent-ink:#15253A; --track:#E4DFD0; --chip:#FAF6EC;
+  --good:#3E5E44; --good-bg:#D3DFD1; --warn:#7A5A00; --warn-bg:#FCEFC4; --todo:#15253A; --todo-bg:#E4E8EE;
+  --display:'Outfit',system-ui,sans-serif; --body:'Plus Jakarta Sans',system-ui,sans-serif; --hand:'Kalam','Comic Sans MS',cursive;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#141E29; --surface:#1D2B3A; --ink:#F3EEE2; --muted:#A9B4C2; --line:#2E3F52; --track:#2E3F52;
-  --sand:#3A3424; --good:#7FD39C; --good-bg:#1E3A2A; --warn:#F2CF5B; --warn-bg:#3A3015; --todo:#C9D7E8; --todo-bg:#24364A; color-scheme:dark}}
+  --bg:#0F1B2B; --surface:#15253A; --ink:#FAF6EC; --muted:#AEB8C4; --line:#2A3B52; --track:#2A3B52; --chip:#0F1B2B;
+  --good:#BFD2C0; --good-bg:#2C4433; --warn:#F4C430; --warn-bg:#3A3115; --todo:#D6DEE8; --todo-bg:#243650; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#141E29; --surface:#1D2B3A; --ink:#F3EEE2; --muted:#A9B4C2; --line:#2E3F52; --track:#2E3F52;
-  --sand:#3A3424; --good:#7FD39C; --good-bg:#1E3A2A; --warn:#F2CF5B; --warn-bg:#3A3015; --todo:#C9D7E8; --todo-bg:#24364A; color-scheme:dark}
+  --bg:#0F1B2B; --surface:#15253A; --ink:#FAF6EC; --muted:#AEB8C4; --line:#2A3B52; --track:#2A3B52; --chip:#0F1B2B;
+  --good:#BFD2C0; --good-bg:#2C4433; --warn:#F4C430; --warn-bg:#3A3115; --todo:#D6DEE8; --todo-bg:#243650; color-scheme:dark}
 html,body{margin:0}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--body)}
 .wrap{max-width:640px;margin:0 auto;padding-block:24px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
-.proto{align-self:flex-start;font:700 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;background:var(--sand);padding:6px 9px;border-radius:4px}
-header{display:flex;flex-direction:column;gap:0;background:#1D2B3A;color:#FAF6EC;border-radius:14px;padding:26px 22px 24px}
-.eyebrow{font:700 12px/1 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-header .eyebrow{color:#A7BDD6;margin-bottom:22px}
-h1{font:800 clamp(46px,12vw,72px)/.92 var(--display);text-transform:uppercase;margin:0;text-wrap:balance}
+.proto{align-self:flex-start;font:700 11px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;background:var(--sun);color:var(--navy);padding:6px 9px;border-radius:6px}
+/* Etikett wie „MEINE ZAHLEN“ in den Vorlagen */
+.tag{align-self:flex-start;display:inline-block;background:var(--sage);color:var(--navy);font:700 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;padding:7px 10px;border-radius:6px}
+header{display:flex;flex-direction:column;background:var(--navy);color:var(--cream);border-radius:16px;padding:26px 22px 26px}
+header .tag{margin-bottom:22px}
+h1{font:700 clamp(40px,11vw,60px)/1.04 var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
 .lede{color:var(--muted);margin:0}
-.sub{font:800 clamp(32px,9vw,46px)/1 var(--display);text-transform:uppercase;margin:12px 0 0;color:#EDC313}
-header .lede{margin-top:18px;color:#D9DEE4}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.sub{font:700 clamp(28px,8vw,40px)/1.1 var(--hand);margin:10px 0 0;color:var(--sun);transform:rotate(-2deg);transform-origin:left center}
+header .lede{margin-top:20px;color:#D6DCE3}
+.handle{margin-top:22px;font:700 11px/1 var(--body);letter-spacing:.07em;text-transform:uppercase;color:var(--cream);opacity:.8}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:18px;min-width:0}
 .stephead{display:flex;align-items:center;gap:12px}
-.num{flex:none;width:30px;height:30px;border-radius:50%;background:#1D2B3A;color:var(--accent);font:800 19px/30px var(--display);text-align:center}
-h2{font:800 26px/1 var(--display);text-transform:uppercase;margin:0}
-h3{font:700 12px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;margin:0;color:var(--muted)}
-button,.btn{font:700 15px/1 var(--body);border-radius:8px;padding:14px 18px;cursor:pointer;border:1px solid transparent;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.num{flex:none;min-width:40px;height:32px;padding:0 8px;border-radius:8px;background:var(--navy);color:var(--cream);font:700 17px/32px var(--display);text-align:center;font-variant-numeric:tabular-nums}
+h2{font:700 26px/1.1 var(--display);margin:0}
+h3{font:700 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;margin:0;color:var(--muted)}
+button,.btn{font:700 15px/1.2 var(--body);border-radius:8px;padding:14px 18px;cursor:pointer;border:1px solid transparent;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;text-align:center}
 .primary{background:var(--accent);color:var(--accent-ink)}
+.primary:hover{filter:brightness(1.05)}
 .ghost{background:transparent;color:inherit;border-color:currentColor}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 /* Regler */
@@ -55,64 +60,74 @@ button,.btn{font:700 15px/1 var(--body);border-radius:8px;padding:14px 18px;curs
 .sl .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 .sl label,.q legend{font-weight:500;font-size:15px}
 .sl label small,.q legend small{display:block;color:var(--muted);font-weight:400;font-size:12.5px}
-.val{display:flex;align-items:baseline;gap:4px;font:800 26px/1 var(--display);font-variant-numeric:tabular-nums;flex:none}
-.val input{font:inherit;color:inherit;background:transparent;border:0;border-bottom:1px dashed var(--line);width:6.6ch;text-align:right;padding:0}
+.val{display:flex;align-items:baseline;gap:4px;font:600 24px/1 var(--display);font-variant-numeric:tabular-nums;flex:none}
+.val input{font:inherit;color:inherit;background:transparent;border:0;border-bottom:1px dashed var(--sage);width:6.6ch;text-align:right;padding:0}
 .val input:focus{outline:none;border-bottom-color:var(--accent)}
 .val em{font:500 14px var(--body);font-style:normal;color:var(--muted)}
 input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;margin:0}
 input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(to right,var(--accent) var(--p,50%),var(--track) var(--p,50%))}
 input[type=range]::-moz-range-track{height:6px;border-radius:3px;background:var(--track)}
 input[type=range]::-moz-range-progress{height:6px;border-radius:3px;background:var(--accent)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#1D2B3A;border:3px solid var(--accent);margin-top:-9px;cursor:grab}
-input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#1D2B3A;border:3px solid var(--accent);cursor:grab}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:var(--navy);border:3px solid var(--accent);margin-top:-9px;cursor:grab}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--navy);border:3px solid var(--accent);cursor:grab}
 /* Auswahl-Chips */
 .q{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;min-width:0}
 .q legend{padding:0;margin-bottom:8px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips label{position:relative}
 .chips input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
-.chips span{display:block;border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:10px 14px;font-size:14px;font-weight:500;cursor:pointer}
-.chips input:checked+span{background:#1D2B3A;color:#FAF6EC;border-color:#1D2B3A}
+.chips span{display:block;border:1px solid var(--line);background:var(--chip);border-radius:8px;padding:10px 14px;font-size:14px;font-weight:500;cursor:pointer}
+.chips input:checked+span{background:var(--navy);color:var(--cream);border-color:var(--navy)}
+:root[data-theme="dark"] .chips input:checked+span{background:var(--sage);color:var(--navy);border-color:var(--sage)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .chips input:checked+span{background:var(--sage);color:var(--navy);border-color:var(--sage)}}
 .chips input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
 /* Ergebnis */
-.verdict{border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:8px}
-.verdict.good{background:#2F7D4F;color:#fff}
-.verdict.warn{background:#EDC313;color:#1D2B3A}
-.verdict.todo{background:#1D2B3A;color:#FAF6EC}
-.verdict .lbl{font:700 12px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;opacity:.85}
-.verdict .big{font:800 46px/1 var(--display);text-transform:uppercase}
+.verdict{border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.verdict.good{background:var(--sage-soft);color:var(--navy)}
+.verdict.warn{background:var(--sun);color:var(--navy)}
+.verdict.todo{background:var(--navy);color:var(--cream)}
+.verdict .lbl{align-self:flex-start;font:700 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;background:var(--sage);color:var(--navy);padding:7px 10px;border-radius:6px}
+.verdict.good .lbl{background:var(--navy);color:var(--cream)}
+.verdict.warn .lbl{background:var(--navy);color:var(--sun)}
+.verdict .big{font:700 40px/1.05 var(--display)}
 .verdict p{margin:0;font-size:15px}
 .meter{display:flex;gap:4px}
-.meter i{flex:1;height:8px;border-radius:4px;background:currentColor;opacity:.25}
+.meter i{flex:1;height:8px;border-radius:4px;background:currentColor;opacity:.22}
 .meter i.on{opacity:1}
+.verdict.todo .meter i.on{background:var(--sun)}
 .areas{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.areas li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--bg)}
+.areas li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--bg)}
 .areas b{font-size:15px}
 .areas .why{grid-column:1/-1;font-size:13.5px;color:var(--muted)}
-.pill{font:700 11px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:6px 8px;border-radius:4px;white-space:nowrap}
+.pill{font:700 11px/1 var(--body);letter-spacing:.1em;text-transform:uppercase;padding:6px 8px;border-radius:6px;white-space:nowrap}
 .pill.ok{background:var(--good-bg);color:var(--good)}
 .pill.fast{background:var(--warn-bg);color:var(--warn)}
 .pill.fehlt{background:var(--todo-bg);color:var(--todo)}
 .key{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--muted);margin:0}
 /* Plan */
 .plan{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:12px}
+.plan li::marker{font:700 16px var(--display)}
 .plan li b{display:block}
 .plan li span{font-size:14.5px;color:var(--muted)}
 .gate{border:2px solid var(--ink)}
 .gate form{display:flex;flex-direction:column;gap:12px}
 .gate input[type=email],.gate input[type=text]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px 14px;width:100%}
 .consent{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;font-size:13px;color:var(--muted);align-items:start}
-.consent input{width:20px;height:20px;margin:1px 0 0;accent-color:#1D2B3A}
+.consent input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--navy)}
 .consent a,.legal a{color:inherit}
 .note{font-size:13px;color:var(--muted);margin:0}
-.next{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.next{border:1px solid var(--line);background:var(--sage-soft);color:var(--navy);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.next h3{color:var(--navy)}
 .next p{margin:0}
-.cta{background:#1D2B3A;color:#FAF6EC;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px}
-.cta h2{color:var(--accent)}
-.cta p{margin:0}
+.cta{background:var(--navy);color:var(--cream);border-radius:16px;padding:22px 20px;display:flex;flex-direction:column;gap:12px}
+.cta h2{color:var(--cream)}
+.cta .hand{font:700 26px/1.1 var(--hand);color:var(--sun);transform:rotate(-2deg);transform-origin:left center;margin:-4px 0 2px}
+.cta p{margin:0;color:#D6DCE3}
+.cta .btn{align-self:flex-start}
 .legal{font-size:12px;color:var(--muted);margin:0}
-.foot{display:flex;gap:16px;flex-wrap:wrap;font-size:12px}
+.foot{display:flex;gap:16px;flex-wrap:wrap;align-items:center;font-size:12px}
 .foot a{color:var(--muted)}
+.foot .handle{margin:0 auto 0 0;color:var(--muted);opacity:1}
 </style>
 </head>
 <body>
@@ -120,14 +135,15 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   <div class="proto" id="proto">Vorschau · es wird noch nichts verschickt</div>
 
   <header>
-    <div class="eyebrow">Jutta Reichenbach · 2 Minuten</div>
+    <span class="tag">Startklar-Check · 2 Minuten</span>
     <h1>Bist du startklar?</h1>
     <p class="sub">Für deine erste Immobilie</p>
     <p class="lede">Bevor du das erste Exposé anschaust, schau auf dein eigenes Konto. Neun Fragen, dann weißt du, wo du stehst und was dir noch fehlt.</p>
+    <div class="handle">@juttareichenbach</div>
   </header>
 
   <section class="card" aria-labelledby="h-ziel">
-    <div class="stephead"><span class="num">1</span><h2 id="h-ziel">Dein Ziel</h2></div>
+    <div class="stephead"><span class="num">01</span><h2 id="h-ziel">Dein Ziel</h2></div>
     <fieldset class="q"><legend>Wofür willst du deine erste Wohnung kaufen?<small>Mehrere Antworten möglich.</small></legend>
       <div class="chips" data-key="ziel">
         <label><input type="checkbox" name="ziel" value="rente"><span>Für meine Altersvorsorge</span></label>
@@ -140,7 +156,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   </section>
 
   <section class="card" aria-labelledby="h-geld">
-    <div class="stephead"><span class="num">2</span><h2 id="h-geld">Dein Geld</h2></div>
+    <div class="stephead"><span class="num">02</span><h2 id="h-geld">Dein Geld</h2></div>
 
     <div class="sl" data-key="netto" data-min="0" data-max="8000" data-step="100" data-val="3000">
       <div class="top"><label for="r-netto">Was kommt jeden Monat netto bei dir an?<small>Dein eigenes Gehalt, so wie es auf dem Konto landet.</small></label>
@@ -168,7 +184,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   </section>
 
   <section class="card" aria-labelledby="h-bank">
-    <div class="stephead"><span class="num">3</span><h2 id="h-bank">Du und die Bank</h2></div>
+    <div class="stephead"><span class="num">03</span><h2 id="h-bank">Du und die Bank</h2></div>
 
     <fieldset class="q"><legend>Wie arbeitest du?</legend>
       <div class="chips" data-key="job">
@@ -202,7 +218,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
   </section>
 
   <section class="card gate" id="gate" aria-labelledby="h-gate">
-    <div class="stephead"><span class="num">4</span><h2 id="h-gate">Dein Ergebnis</h2></div>
+    <div class="stephead"><span class="num">04</span><h2 id="h-gate">Dein Ergebnis</h2></div>
     <p style="margin:0">Wo du heute stehst, und für jeden Punkt, der noch nicht passt, was du als Nächstes tust. Du siehst alles sofort hier und bekommst es zusätzlich per Mail.</p>
     <form id="gateForm" novalidate>
       <input type="text" id="gName" placeholder="Vorname" autocomplete="given-name">
@@ -240,12 +256,13 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
   <section class="cta">
     <h2>Lass uns draufschauen</h2>
+    <div class="hand">bevor du zahlst</div>
     <p>Im kostenlosen Kennenlerngespräch schauen wir, ob und wie du finanzierbar bist, bevor du irgendetwas zahlst. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.</p>
     <a class="btn primary" id="ctaLink" href="#">Schreib mir auf Instagram</a>
   </section>
 
   <p class="legal">Dieser Check ist eine allgemeine Einschätzung und ersetzt keine Finanz- oder Steuerberatung. Jede Bank rechnet anders. Deine Angaben bleiben in deinem Browser, gespeichert wird nur, was du unter Schritt 4 einträgst, zusammen mit deinem Ergebnis.</p>
-  <div class="foot"><a id="imLink" href="#">Impressum</a><a id="dsLink2" href="#">Datenschutz</a></div>
+  <div class="foot"><span class="handle">@juttareichenbach</span><a id="imLink" href="#">Impressum</a><a id="dsLink2" href="#">Datenschutz</a></div>
 </main>
 
 <script>
