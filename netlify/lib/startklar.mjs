@@ -63,7 +63,7 @@ export function resultMail(name, r) {
 <div style="background:${bg};color:${fg};border-radius:12px;padding:16px 18px;margin:16px 0">
 <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${r.verdict === "good" ? "#D3DFD1" : fg}">Dein Ergebnis</div>
 <div style="font-family:Outfit,Arial,Helvetica,sans-serif;font-size:30px;font-weight:800;margin-top:6px">${label}</div>
-${r.verdictText ? `<p style="margin:8px 0 0;font-size:15px;line-height:1.5">${esc(r.verdictText)}</p>` : ""}
+${r.verdictText ? `<p style="margin:8px 0 0;font-size:15px;line-height:1.5;color:${r.verdict === "good" ? "#FAF6EC" : fg}">${esc(r.verdictText)}</p>` : ""}
 </div>
 <table style="width:100%;border-collapse:collapse;font-size:14px">
 ${r.areas.map((a) => `<tr><td style="padding:8px 0;border-bottom:1px solid #E3DDCF"><b>${esc(a.name)}</b><br><span style="color:#56636F">${esc(a.why)}</span></td><td style="padding:8px 0 8px 10px;border-bottom:1px solid #E3DDCF;text-align:right;vertical-align:top"><span style="background:${PILL[a.st][1]};color:${PILL[a.st][2]};font-size:11px;font-weight:bold;text-transform:uppercase;padding:4px 6px;border-radius:999px;white-space:nowrap">${PILL[a.st][0]}</span></td></tr>`).join("")}
