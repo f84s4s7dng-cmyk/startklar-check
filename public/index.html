@@ -258,7 +258,7 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 
   <section class="cta">
     <h2>Lass uns draufschauen</h2>
-    <p>Im kostenlosen Kennenlerngespräch schauen wir gemeinsam auf deine Zahlen und finden heraus, wie dein Weg zur ersten Wohnung aussieht. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.</p>
+    <p id="ctaText">Im kostenlosen Kennenlerngespräch schauen wir gemeinsam auf deine Zahlen und finden heraus, wie dein Weg zur ersten Wohnung aussieht. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.</p>
     <a class="btn primary" id="ctaLink" href="#">Schreib mir auf Instagram</a>
   </section>
 
@@ -350,7 +350,7 @@ function evaluate(s) {
 
   // 3 Polster
   if (s.spar >= T.sparGut) a = ["ok", "Du hast ein Polster. Das beruhigt die Bank und dich."];
-  else if (s.spar >= T.sparFast) a = ["fast", "Ein guter Anfang ist schon da.",
+  else if (s.spar >= T.sparFast) a = ["fast", "Du hast schon angefangen zu sparen. Das ist der wichtigste Schritt.",
     "Polster weiter aufbauen", "Bei 110 % zahlt die Bank auch die Kaufnebenkosten. Für eine Reparatur oder einen Monat ohne Mieter legst du am besten jeden Monat einen festen Betrag zur Seite, direkt wenn das Gehalt kommt."];
   else a = ["fehlt", "Dein Polster baust du ganz nebenbei auf.",
     "Dauerauftrag einrichten", "Bei 110 % zahlt die Bank auch die Kaufnebenkosten. Für Überraschungen an der Wohnung brauchst du trotzdem eine Rücklage. Ein Dauerauftrag am Tag nach dem Gehalt reicht für den Start, auch mit einem kleinen Betrag."];
@@ -373,7 +373,7 @@ function evaluate(s) {
     "Mit dem Kontoauszug anfangen", "Ein Monat reicht für den Anfang. Mit diesen Zahlen gehst du sicher ins Bankgespräch, und ich kann dir viel genauer sagen, was für dich möglich ist."];
   else if (s.zeit < T.zeitMin) a = ["fehlt", "Ein fester Abend pro Woche reicht für den Anfang.",
     "Feste Zeit einplanen", "Am Anfang brauchst du ein paar Stunden pro Woche für Bankgespräche und Besichtigungen. Such dir einen festen Abend aus und trag ihn dir in den Kalender ein. Den Rest gehen wir zusammen an."];
-  else if (s.ueberblick === "grob") a = ["fast", "Du bist nah dran.",
+  else if (s.ueberblick === "grob") a = ["fast", "Du hast schon einen Überblick. Jetzt geht es um die Feinarbeit.",
     "Zahlen auf den Euro genau", "Die Bank will deine Einnahmen und Ausgaben schwarz auf weiß sehen. Mach aus deinem groben Überblick eine Haushaltsrechnung, die du jeder Bank auf den Tisch legen kannst."];
   else if (s.zeit < T.zeitGut) a = ["fast", "Du kennst deine Zahlen. Jetzt fehlt nur noch etwas Zeit.",
     "Feste Termine eintragen", "Mit ein paar Stunden pro Woche kommst du gut voran. Leg dir feste Termine für Besichtigungen und Bankgespräche in den Kalender."];
@@ -388,6 +388,12 @@ function evaluate(s) {
   return { areas: A, verdict: v, ok: A.length - fehlt - fast };
 }
 
+const CTA = {
+  good: "Deine Zahlen sind stark. Im kostenlosen Kennenlerngespräch schauen wir, welche Wohnung zu dir passt und wie deine Finanzierung aussehen kann.",
+  warn: "Die letzten Stellschrauben drehen wir am schnellsten zusammen. Im kostenlosen Kennenlerngespräch schauen wir, welche zuerst dran ist, damit du bald loslegen kannst.",
+  todo: "Dein Fundament steht. Im kostenlosen Kennenlerngespräch machen wir daraus einen Plan mit festen Etappen bis zu deiner ersten Wohnung.",
+};
+const PROOF = "Ich habe selbst mit einer einzigen Wohnung angefangen, heute sind es mehr als 20. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.";
 const PILL = { ok: "passt", fast: "fast", fehlt: "nächster Schritt" };
 let last, unlocked = false;
 function compute() {
@@ -396,6 +402,7 @@ function compute() {
   $("verdict").className = "verdict " + cls;
   $("vBig").textContent = big;
   $("vText").textContent = text;
+  if (unlocked) $("ctaText").textContent = CTA[cls] + " " + PROOF;
   $("meter").innerHTML = [["todo", "Fundament"], ["warn", "Fast startklar"], ["good", "Startklar"]]
     .map(([k, t]) => `<div class="${k === cls ? "on" : ""}"><i></i><span>${t}</span></div>`).join("");
   $("meter").setAttribute("aria-label", `Stufe ${["todo", "warn", "good"].indexOf(cls) + 1} von 3: ${big}`);
@@ -431,12 +438,13 @@ async function submitGate(ev) {
     msg.textContent = "Einen Moment …";
     try {
       const res = await fetch("/api/subscribe", { method: "POST", headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email: mail, name, consent: true, result: { ziel: state.ziel, verdict: last.verdict[0], areas: last.areas.map(({ name, st, why, step, tip }) => ({ name, st, why, step, tip })), zielText: $("zielText").textContent } }) });
+        body: JSON.stringify({ email: mail, name, consent: true, result: { ziel: state.ziel, verdict: last.verdict[0], verdictText: last.verdict[2], areas: last.areas.map(({ name, st, why, step, tip }) => ({ name, st, why, step, tip })), zielText: $("zielText").textContent } }) });
       if (!res.ok) throw new Error();
       confirmed = !!(await res.json().catch(() => ({}))).confirmed;
     } catch { msg.textContent = "Das hat nicht geklappt. Versuch es bitte gleich nochmal."; return; }
   }
   unlocked = true;
+  $("ctaText").textContent = CTA[last.verdict[0]] + " " + PROOF;
   $("gate").hidden = true; $("ergCard").hidden = false; $("mailCard").hidden = false;
   $("nextExpose").hidden = !$("nextExpose").dataset.show;
   $("mailText").textContent = CONFIG.preview
