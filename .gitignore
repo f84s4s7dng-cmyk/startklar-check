@@ -1,0 +1,6 @@
+
+# Story-Vorlagen: private Fotos und fertige Bilder nicht ins (öffentliche) Repository
+stories/fotos/*
+!stories/fotos/.gitkeep
+stories/png/
+stories/png-markiert/

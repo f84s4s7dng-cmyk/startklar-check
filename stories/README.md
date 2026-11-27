@@ -12,8 +12,8 @@
 | 06 | Welche Stufe bist du? | Check | – |
 | 07 | Mütze im Winter | Check | `fotos/muetze-winter.jpg` |
 | 08 | Garderobe | Check | `fotos/garderobe.jpg` |
-| 09 | KI-Foto Küchentisch | Checkliste | `fotos/ki-kuechentisch.jpg` |
-| 10 | Foto oben + Checkliste | Checkliste | `fotos/foto-10.jpg` |
+| 09 | Küche | Checkliste | `fotos/kueche.jpg` |
+| 10 | Im Auto + Checkliste | Checkliste | `fotos/auto.jpg` |
 
 ## Links
 
@@ -27,3 +27,5 @@ In Instagram den **Link-Sticker** auf die Fläche unter „↓ …“ setzen. In
 1. Fotos mit genau den Namen oben nach `stories/fotos/` legen (JPG, möglichst Hochformat). Fehlt eins, erscheint ein Platzhalter.
 2. `node stories/build.mjs`
 3. Fertige Bilder: `stories/png/`
+
+Das Repository ist öffentlich. Fotos und fertige Bilder sind deshalb in `.gitignore` und werden nicht hochgeladen.
