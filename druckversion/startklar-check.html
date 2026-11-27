@@ -2,11 +2,10 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<title>Startklar-Check zum Ausdrucken · Jutta Reichenbach</title>
+<title>Startklar-Check Checkliste · Jutta Reichenbach</title>
 <style>
-/* Druckversion des Startklar-Checks. Wird mit build.mjs zur PDF (A4). Fragen, Grenzwerte und Texte wie in public/index.html */
+/* Kompakte Druckversion (2 Seiten A4). Grenzwerte wie T in public/index.html. Bauen: node druckversion/build.mjs */
 @font-face{font-family:'Outfit';font-weight:500;src:url(../public/fonts/Outfit-Medium.woff) format('woff')}
-@font-face{font-family:'Outfit';font-weight:700;src:url(../public/fonts/Outfit-Bold.woff) format('woff')}
 @font-face{font-family:'Outfit';font-weight:800;src:url(../public/fonts/Outfit-ExtraBold.woff) format('woff')}
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400;src:url(../public/fonts/PlusJakartaSans-Regular.woff) format('woff')}
 @font-face{font-family:'Plus Jakarta Sans';font-weight:500;src:url(../public/fonts/PlusJakartaSans-Medium.woff) format('woff')}
@@ -17,438 +16,162 @@
   --display:'Outfit','Helvetica Neue',Arial,sans-serif;--body:'Plus Jakarta Sans','Helvetica Neue',Arial,sans-serif}
 *{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 html,body{margin:0;background:#fff}
-body{color:var(--ink);font:400 10pt/1.5 var(--body)}
-.page{width:210mm;height:297mm;padding:15mm 16mm 17mm;position:relative;overflow:hidden;page-break-after:always;background:var(--creme);display:flex;flex-direction:column;gap:3.6mm}
+body{color:var(--ink);font:400 10pt/1.45 var(--body)}
+.page{width:210mm;height:297mm;padding:14mm 15mm 17mm;position:relative;overflow:hidden;page-break-after:always;background:var(--creme);display:flex;flex-direction:column;gap:5mm}
 .page:last-child{page-break-after:auto}
-.foot{position:absolute;left:16mm;right:16mm;bottom:8mm;display:flex;justify-content:space-between;font-size:7.5pt;color:var(--muted)}
-h1{font:800 40pt/1.02 var(--display);margin:0;letter-spacing:-.01em}
-h2{font:800 20pt/1.1 var(--display);margin:0;letter-spacing:-.01em}
-h3{font:800 13pt/1.15 var(--display);margin:0}
+.foot{position:absolute;left:15mm;right:15mm;bottom:8mm;display:flex;justify-content:space-between;font-size:7.5pt;color:var(--muted)}
+h1{font:800 30pt/1.02 var(--display);margin:0;letter-spacing:-.01em}
+h2{font:800 17pt/1.1 var(--display);margin:0}
 p{margin:0}
 .muted{color:var(--muted)}
-.eyebrow{font:700 8pt/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:2mm}
-.eyebrow::before{content:"";width:2.2mm;height:2.2mm;border-radius:50%;background:var(--salbei);flex:none}
-.head{display:flex;align-items:center;gap:3.5mm}
-.num{flex:none;width:9mm;height:9mm;border-radius:50%;background:var(--ink);color:var(--salbei-hell);font:800 13pt/9mm var(--display);text-align:center}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:3.5mm;padding:5mm;display:flex;flex-direction:column;gap:3.5mm}
-.box{width:3.6mm;height:3.6mm;border:1.2px solid var(--ink);border-radius:.8mm;display:inline-block;flex:none;vertical-align:-.6mm;background:#fff}
-.round{border-radius:50%}
-
-/* Titelseite */
-.cover{background:var(--ink);color:var(--creme);gap:0}
-.cover .logo{width:92mm;margin-bottom:34mm}
-.cover .eyebrow{color:var(--salbei-hell);margin-bottom:5mm}
-.cover h1{font-size:52pt}
-.cover .sub{font:700 22pt/1.15 var(--display);color:var(--gelb);margin-top:3mm}
-.cover .lede{color:#C9D1D9;font-size:12pt;max-width:150mm;margin-top:8mm}
-.cover .privacy{margin-top:auto;border:1px solid #273B52;border-radius:3.5mm;padding:5mm 6mm;display:grid;grid-template-columns:auto 1fr;gap:4mm;align-items:start}
-.cover .privacy svg{width:9mm;height:9mm}
-.cover .privacy b{display:block;font:700 12pt/1.3 var(--display);color:var(--creme);margin-bottom:1mm}
-.cover .privacy p{color:#C9D1D9;font-size:9.5pt}
-.cover .how{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm;margin:10mm 0 8mm}
-.cover .how div{border-top:2px solid var(--salbei);padding-top:3mm;font-size:9.5pt;color:#C9D1D9}
-.cover .how b{display:block;color:var(--creme);font:700 11pt/1.2 var(--display);margin-bottom:1mm}
-.cover .foot{color:#8C99A6}
-
-/* Fragen */
-.q{display:flex;flex-direction:column;gap:2mm}
-.q .lbl{font-weight:700;font-size:10.5pt}
-.q .hint{font-size:8.5pt;color:var(--muted);margin-top:-1.5mm}
-.opts{display:flex;flex-wrap:wrap;gap:2mm 6mm}
-.opts span{display:inline-flex;align-items:center;gap:2mm;font-size:10pt}
-.field{display:flex;align-items:flex-end;gap:2mm}
-.field .line{flex:none;width:38mm;border-bottom:1.2px solid var(--ink);height:7mm}
-.field em{font-style:normal;color:var(--muted);font-weight:500}
-.twocol{display:grid;grid-template-columns:1fr 1fr;gap:4mm 8mm}
-.qnum{font:800 9pt/1 var(--display);color:var(--salbei);margin-right:1.5mm}
-
-/* Auswertung */
-.area{background:var(--surface);border:1px solid var(--line);border-radius:3.5mm;padding:2.6mm 4.5mm;display:flex;flex-direction:column;gap:1.2mm;break-inside:avoid}
-.area .top{display:flex;justify-content:space-between;align-items:baseline;gap:4mm}
-.area .top small{font-size:8pt;color:var(--muted)}
-.rules{width:100%;border-collapse:collapse;font-size:9pt}
-.rules td{padding:.75mm 0;border-top:1px solid var(--line);vertical-align:middle}
-.rules td:first-child{width:6mm}
-.rules td:last-child{text-align:right;width:31mm}
-.calc{font-size:8.5pt;color:var(--muted);background:var(--creme);border-radius:2mm;padding:1.6mm 2.5mm;display:flex;gap:2mm;align-items:center;flex-wrap:wrap}
-.calc .line{display:inline-block;width:20mm;border-bottom:1px solid var(--ink);height:4mm}
+.eyebrow{font:700 7.5pt/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:2mm}
+.eyebrow::before{content:"";width:2mm;height:2mm;border-radius:50%;background:var(--salbei);flex:none}
+.box{width:3.8mm;height:3.8mm;border:1.2px solid var(--ink);border-radius:.8mm;display:inline-block;flex:none;background:#fff}
 .pill{font:700 7pt/1 var(--body);letter-spacing:.08em;text-transform:uppercase;padding:1.3mm 2.2mm;border-radius:99px;white-space:nowrap;display:inline-block}
 .pill.ok{background:var(--good-bg);color:var(--good)}
 .pill.fast{background:var(--warn-bg);color:var(--warn)}
 .pill.fehlt{background:var(--salbei-hell);color:var(--ink)}
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:3.6mm}
-.pair .rules td:last-child{width:27mm}
-.pair .calc{display:block;line-height:2}
-.key{display:flex;gap:5mm;font-size:8.5pt;color:var(--muted);align-items:center;flex-wrap:wrap}
 
-/* Ergebnis */
-.tally{display:grid;grid-template-columns:repeat(3,1fr);gap:4mm}
-.tally div{background:var(--surface);border:1px solid var(--line);border-radius:3.5mm;padding:4mm;display:flex;flex-direction:column;gap:3mm;align-items:flex-start}
-.tally .count{display:flex;align-items:flex-end;gap:2mm;font-size:9pt;color:var(--muted)}
-.tally .count i{display:inline-block;width:14mm;height:10mm;border-bottom:1.5px solid var(--ink)}
-.verdicts{display:flex;flex-direction:column;gap:3mm}
-.v{border-radius:3.5mm;padding:4.5mm 5mm;display:grid;grid-template-columns:auto 1fr;gap:1mm 4mm;align-items:start}
-.v .box{width:5mm;height:5mm;margin-top:1.5mm}
-.v .rule{font:700 8pt/1.2 var(--body);letter-spacing:.1em;text-transform:uppercase;opacity:.8}
-.v .big{font:800 20pt/1.05 var(--display);margin:1mm 0}
-.v p{font-size:9.5pt}
-.v.good{background:var(--ink);color:var(--creme)}
-.v.good .box{border-color:var(--creme);background:transparent}
-.v.good .big{color:var(--gelb)}
+header{background:var(--ink);color:var(--creme);border-radius:3.5mm;padding:7mm 8mm;display:grid;grid-template-columns:1fr auto;gap:2mm 8mm;align-items:end}
+header .logo{width:70mm;grid-column:1/-1;margin-bottom:5mm}
+header .eyebrow{color:var(--salbei-hell);grid-column:1/-1}
+header .sub{font:500 13pt/1.2 var(--display);color:var(--gelb);margin-top:1.5mm}
+header .lock{max-width:62mm;font-size:8.5pt;color:#C9D1D9;display:grid;grid-template-columns:auto 1fr;gap:2.5mm;align-items:start;border-left:1px solid #273B52;padding-left:5mm}
+header .lock b{color:var(--creme);display:block}
+header .lock svg{width:6mm;height:6mm}
+
+.how{display:flex;gap:5mm;font-size:9pt}
+.how div{flex:1;border-top:2px solid var(--salbei);padding-top:2mm}
+.how b{font:800 10pt var(--display);margin-right:1mm}
+
+table.check{width:100%;border-collapse:separate;border-spacing:0;background:var(--surface);border:1px solid var(--line);border-radius:3.5mm;overflow:hidden;font-size:8.8pt;table-layout:fixed}
+.check th{text-align:left;padding:3mm 3mm 2.5mm;border-bottom:1px solid var(--line);font-weight:400}
+.check th:first-child{width:36mm}
+.check td{padding:4.6mm 3mm;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.38}
+.check tr:last-child td{border-bottom:0}
+.check td:first-child b{font:800 11pt/1.15 var(--display);display:block}
+.check td:first-child small{display:block;color:var(--muted);font-size:7.8pt;margin-top:1mm}
+.check .opt{display:grid;grid-template-columns:auto 1fr;gap:2mm;align-items:start}
+.check .opt .box{margin-top:.3mm}
+.check td.c2{background:#FDF8E6}
+.check td.c3{background:#EEF3EC}
+.check th.c2{background:#FDF8E6}
+.check th.c3{background:#EEF3EC}
+.rule{font-size:8.5pt;color:var(--muted)}
+.rule b{color:var(--ink)}
+
+.tally{display:grid;grid-template-columns:auto repeat(3,1fr);gap:4mm;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:3.5mm;padding:4mm 5mm}
+.tally .t{display:flex;align-items:flex-end;gap:2mm;font-size:9pt;color:var(--muted)}
+.tally .t i{display:inline-block;width:11mm;height:7mm;border-bottom:1.5px solid var(--ink)}
+
+.verdicts{display:grid;grid-template-columns:repeat(3,1fr);gap:3mm}
+.v{border-radius:3.5mm;padding:4mm;display:flex;flex-direction:column;gap:1.5mm}
+.v .top{display:flex;gap:2.5mm;align-items:center}
+.v .if{font:700 7pt/1.3 var(--body);letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.v .big{font:800 15pt/1.05 var(--display)}
+.v p{font-size:8.6pt}
+.v.good{background:var(--ink);color:var(--creme)} .v.good .big{color:var(--gelb)} .v.good .box{background:transparent;border-color:var(--creme)}
 .v.warn{background:var(--salbei-hell)}
 .v.todo{background:var(--salbei)}
-.ziel{display:flex;flex-direction:column;gap:2.2mm;font-size:9pt}
-.ziel div{display:grid;grid-template-columns:42mm 1fr;gap:4mm;border-top:1px solid var(--line);padding-top:2.2mm}
-.ziel b{font-size:9.5pt}
 
-/* Plan */
-.steps{display:flex;flex-direction:column;gap:2.4mm}
-.step{background:var(--surface);border:1px solid var(--line);border-radius:3.5mm;padding:2.8mm 4.5mm;display:flex;flex-direction:column;gap:1mm;break-inside:avoid}
-.step .when{font:700 7.5pt/1.2 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.step h3{font-size:11.5pt}
-.step p{font-size:8.6pt;line-height:1.42;color:var(--muted)}
-.step ul{list-style:none;margin:.3mm 0 0;padding:0;display:flex;flex-direction:column;gap:.8mm}
-.step li{display:grid;grid-template-columns:auto 1fr;gap:2.5mm;font-size:8.8pt;line-height:1.4;align-items:start}
-.step li .box{margin-top:.6mm}
-.areahead{display:flex;align-items:center;gap:3mm;margin-top:1mm}
-.areahead h3{font-size:11pt;text-transform:uppercase;letter-spacing:.08em;font-family:var(--body);font-weight:700;color:var(--ink)}
-.areahead::after{content:"";flex:1;height:1px;background:var(--line)}
-.first{background:var(--salbei-hell);border-left:1.6mm solid var(--gelb);border-radius:3.5mm;padding:3.5mm 5mm;display:flex;flex-direction:column;gap:1.8mm}
-.first .line{border-bottom:1.2px solid var(--ink);height:6mm}
-.order{display:flex;gap:2mm;flex-wrap:wrap;font-size:9pt}
-.order span{background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:1.2mm 3mm}
+.steps{background:var(--surface);border:1px solid var(--line);border-radius:3.5mm;padding:1mm 5mm}
+.steps div{display:grid;grid-template-columns:36mm 1fr;gap:4mm;padding:2.6mm 0;border-bottom:1px solid var(--line);font-size:8.8pt;line-height:1.4}
+.steps div:last-child{border-bottom:0}
+.steps b{font:800 10pt/1.2 var(--display)}
+.steps p + p{margin-top:.8mm}
+.steps .k{font-weight:700}
 
-/* Schluss */
-.cta{background:var(--ink);color:var(--creme);border-radius:3.5mm;padding:6mm;display:flex;flex-direction:column;gap:3mm}
+.cta{background:var(--ink);color:var(--creme);border-radius:3.5mm;padding:5.5mm 6mm;display:grid;grid-template-columns:1fr auto;gap:2mm 6mm;align-items:center}
 .cta h2{color:var(--creme)}
-.cta p{color:#C9D1D9;font-size:10pt}
-.cta .btn{align-self:flex-start;background:var(--gelb);color:var(--ink);font:700 10.5pt/1 var(--body);border-radius:3mm;padding:3.5mm 5mm;text-decoration:none}
-.next{background:var(--surface);border:1px solid var(--line);border-radius:3.5mm;padding:5mm;display:flex;flex-direction:column;gap:2mm}
-.notes{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:3.5mm;padding:5mm;background-image:repeating-linear-gradient(to bottom,transparent 0 8.4mm,var(--line) 8.4mm 8.6mm);background-origin:content-box;background-clip:content-box}
-.legal{font-size:7.5pt;color:var(--muted)}
+.cta p{color:#C9D1D9;font-size:9pt}
+.cta .btn{grid-row:1/3;grid-column:2;background:var(--gelb);color:var(--ink);font:700 9.5pt/1.25 var(--body);border-radius:3mm;padding:3.5mm 4.5mm;text-decoration:none;text-align:center}
+.legal{font-size:7.5pt;color:var(--muted);margin-top:auto}
 </style>
 </head>
 <body>
 
-<!-- ============ 1 TITEL ============ -->
-<section class="page cover">
-  <svg class="logo" role="img" aria-label="Jutta Reichenbach, Erste Immobilie und Vermögen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 88"><g transform="translate(2,4)"><rect x="4" y="4" width="72" height="72" rx="18" fill="#15253A" stroke="#273B52" stroke-width="2"/><circle cx="60" cy="18" r="7" fill="#F4C430"/><path d="M16 40 L38 21 L60 40" fill="none" stroke="#9FB4A0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><text x="38" y="63" text-anchor="middle" font-family="Outfit, sans-serif" font-weight="800" font-size="22" letter-spacing="0.5" fill="#FAF6EC">JR</text></g><text x="100" y="46" font-family="Outfit, sans-serif" font-weight="800" font-size="29" letter-spacing="1.45" fill="#FAF6EC">JUTTA <tspan font-weight="500" fill="#9FB4A0">REICHENBACH</tspan></text><text x="101" y="71" font-family="Plus Jakarta Sans, sans-serif" font-weight="500" font-size="12" letter-spacing="3.00" fill="#C9D1D9">ERSTE IMMOBILIE &amp; VERMÖGEN</text></svg>
-  <div class="eyebrow">Startklar-Check · zum Ausdrucken</div>
-  <h1>Bist du startklar?</h1>
-  <p class="sub">Für deine erste Immobilie</p>
-  <p class="lede">Bevor du das erste Exposé anschaust, schau auf dein eigenes Konto. Neun Fragen, dann weißt du, wo du stehst und was dir noch fehlt. Dieselben Fragen wie im Online-Check, nur auf Papier.</p>
+<!-- ============ SEITE 1: CHECKLISTE ============ -->
+<section class="page">
+  <header>
+    <svg class="logo" role="img" aria-label="Jutta Reichenbach, Erste Immobilie und Vermögen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 88"><g transform="translate(2,4)"><rect x="4" y="4" width="72" height="72" rx="18" fill="#15253A" stroke="#273B52" stroke-width="2"/><circle cx="60" cy="18" r="7" fill="#F4C430"/><path d="M16 40 L38 21 L60 40" fill="none" stroke="#9FB4A0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><text x="38" y="63" text-anchor="middle" font-family="Outfit, sans-serif" font-weight="800" font-size="22" letter-spacing="0.5" fill="#FAF6EC">JR</text></g><text x="100" y="46" font-family="Outfit, sans-serif" font-weight="800" font-size="29" letter-spacing="1.45" fill="#FAF6EC">JUTTA <tspan font-weight="500" fill="#9FB4A0">REICHENBACH</tspan></text><text x="101" y="71" font-family="Plus Jakarta Sans, sans-serif" font-weight="500" font-size="12" letter-spacing="3.00" fill="#C9D1D9">ERSTE IMMOBILIE &amp; VERMÖGEN</text></svg>
+    <div class="eyebrow">Startklar-Check · Checkliste zum Ausdrucken</div>
+    <div><h1>Bist du startklar?</h1><p class="sub">Für deine erste Immobilie</p></div>
+    <div class="lock"><svg viewBox="0 0 24 24" fill="none" stroke="#F4C430" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg><div><b>Deine Zahlen bleiben bei dir</b>Du füllst alles auf Papier aus. Nichts davon geht übers Internet.</div></div>
+  </header>
 
   <div class="how">
-    <div><b>1 · Ausfüllen</b>Beantworte die neun Fragen auf Seite 2. Am besten mit dem Kontoauszug vom letzten Monat daneben.</div>
-    <div><b>2 · Auswerten</b>Auf Seite 3 kreuzt du in fünf Bereichen an, wo du stehst. Das dauert etwa zehn Minuten.</div>
-    <div><b>3 · Loslegen</b>Auf Seite 4 siehst du dein Ergebnis, ab Seite 5 deinen Plan mit Handgriffen zum Abhaken.</div>
+    <div><b>1</b> Nimm deinen letzten Kontoauszug und einen Stift.</div>
+    <div><b>2</b> Kreuz in jeder Zeile <b>ein</b> Feld an. Passen zwei, nimm das weiter rechts.</div>
+    <div><b>3</b> Zähl zusammen und schau auf Seite 2, wo du stehst.</div>
   </div>
 
-  <div class="privacy">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#F4C430" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg>
-    <div><b>Deine Zahlen bleiben bei dir</b><p>Du füllst alles auf Papier aus. Nichts davon geht über das Internet, auch nicht an mich. Wenn du später mit mir draufschauen willst, entscheidest du selbst, was du mir erzählst.</p></div>
-  </div>
-  <div class="foot"><span>juttareichenbach.com</span><span>Du brauchst: einen Stift, deinen letzten Kontoauszug und etwa 20 Minuten</span></div>
-</section>
-
-<!-- ============ 2 FRAGEN ============ -->
-<section class="page">
-  <div class="eyebrow">Teil 1 · Deine Zahlen</div>
-  <h2>Neun Fragen</h2>
-  <p class="muted">Schätz ehrlich. Hier sieht niemand mit, und nur ehrliche Zahlen helfen dir weiter.</p>
-
-  <div class="card">
-    <div class="head"><span class="num">1</span><h3>Dein Ziel</h3></div>
-    <div class="q">
-      <div class="lbl"><span class="qnum">01</span>Wofür willst du deine erste Wohnung kaufen?</div>
-      <div class="hint">Mehrere Antworten möglich.</div>
-      <div class="opts">
-        <span><i class="box"></i>Für meine Altersvorsorge</span>
-        <span><i class="box"></i>Finanziell unabhängig werden</span>
-        <span><i class="box"></i>Ein zweites Einkommen</span>
-        <span><i class="box"></i>Eigenes Vermögen aufbauen</span>
-        <span><i class="box"></i>Weiß ich noch nicht</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="head"><span class="num">2</span><h3>Dein Geld</h3></div>
-    <div class="twocol">
-      <div class="q">
-        <div class="lbl"><span class="qnum">02</span>Was kommt jeden Monat netto bei dir an?</div>
-        <div class="hint">Dein eigenes Gehalt, so wie es auf dem Konto landet.</div>
-        <div class="field"><span class="line"></span><em>€ im Monat</em></div>
-      </div>
-      <div class="q">
-        <div class="lbl"><span class="qnum">03</span>Was bleibt am Monatsende übrig?</div>
-        <div class="hint">Nach Miete, Einkauf, Versicherungen und Urlaub. Schätz ehrlich.</div>
-        <div class="field"><span class="line"></span><em>€ im Monat</em></div>
-      </div>
-      <div class="q">
-        <div class="lbl"><span class="qnum">04</span>Wie viel hast du gespart?</div>
-        <div class="hint">Tagesgeld oder Depot, alles, was du in ein paar Wochen flüssig machen kannst.</div>
-        <div class="field"><span class="line"></span><em>€</em></div>
-      </div>
-      <div class="q">
-        <div class="lbl"><span class="qnum">05</span>Was zahlst du jeden Monat für Kredite und Raten?</div>
-        <div class="hint">Auto, Handy auf Raten, Möbel, Dispo. Deine eigene Miete gehört hier nicht rein.</div>
-        <div class="field"><span class="line"></span><em>€ im Monat</em></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="head"><span class="num">3</span><h3>Du und die Bank</h3></div>
-    <div class="q">
-      <div class="lbl"><span class="qnum">06</span>Wie arbeitest du?</div>
-      <div class="opts"><span><i class="box round"></i>Unbefristet oder verbeamtet</span><span><i class="box round"></i>Selbstständig</span><span><i class="box round"></i>Befristet oder in der Probezeit</span></div>
-    </div>
-    <div class="q">
-      <div class="lbl"><span class="qnum">07</span>Gibt es negative Einträge bei der Schufa?</div>
-      <div class="opts"><span><i class="box round"></i>Nein, alles sauber</span><span><i class="box round"></i>Keine Ahnung</span><span><i class="box round"></i>Ja</span></div>
-    </div>
-    <div class="q">
-      <div class="lbl"><span class="qnum">08</span>Weißt du, wofür dein Geld jeden Monat draufgeht?</div>
-      <div class="opts"><span><i class="box round"></i>Ja, auf den Euro</span><span><i class="box round"></i>So ungefähr</span><span><i class="box round"></i>Ehrlich gesagt nein</span></div>
-    </div>
-    <div class="q">
-      <div class="lbl"><span class="qnum">09</span>Wie viele Stunden pro Woche hast du in den nächsten Monaten dafür?</div>
-      <div class="hint">Für Bankgespräche und Besichtigungen und um Wohnungen durchzurechnen.</div>
-      <div class="field"><span class="line" style="width:24mm"></span><em>Stunden pro Woche</em></div>
-    </div>
-  </div>
-  <div class="foot"><span>Startklar-Check · Jutta Reichenbach</span><span>2</span></div>
-</section>
-
-<!-- ============ 3 AUSWERTUNG ============ -->
-<section class="page">
-  <div class="eyebrow">Teil 2 · Auswertung</div>
-  <h2>Wo stehst du in fünf Bereichen?</h2>
-  <p class="muted">Geh in jedem Bereich von oben nach unten. <b style="color:var(--ink)">Die erste Zeile, die auf dich zutrifft, zählt.</b> Kreuz sie an und lass den Rest stehen.</p>
-  <p class="key"><span><span class="pill ok">passt</span> sieht die Bank gern</span><span><span class="pill fast">fast</span> kleine Stellschraube</span><span><span class="pill fehlt">nächster Schritt</span> hier fängst du an</span></p>
-
-  <div class="area">
-    <div class="top"><h3>Gehalt und Job</h3><small>Fragen 02, 04, 06</small></div>
-    <table class="rules">
-      <tr><td><i class="box"></i></td><td>Ich bin befristet angestellt oder noch in der Probezeit.</td><td><span class="pill fast">fast</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Netto unter 2.000 € und weniger als 30.000 € gespart.</td><td><span class="pill fehlt">nächster Schritt</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Netto unter 2.000 €, aber 30.000 € oder mehr gespart.</td><td><span class="pill fast">fast</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Ich bin selbstständig.</td><td><span class="pill fast">fast</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Netto zwischen 2.000 und 2.499 €.</td><td><span class="pill fast">fast</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Nichts davon: unbefristet oder verbeamtet mit 2.500 € netto oder mehr.</td><td><span class="pill ok">passt</span></td></tr>
-    </table>
-  </div>
-
-  <div class="pair">
-  <div class="area">
-    <div class="top"><h3>Was übrig bleibt</h3><small>Fragen 02, 03</small></div>
-    <div class="calc">Zielmarke: Netto <span class="line"></span> × 0,15 = <span class="line"></span> €<br>Mindestens aber 300 €.</div>
-    <table class="rules">
-      <tr><td><i class="box"></i></td><td>Zielmarke oder mehr</td><td><span class="pill ok">passt</span></td></tr>
-      <tr><td><i class="box"></i></td><td>100 € bis unter Zielmarke</td><td><span class="pill fast">fast</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Weniger als 100 €</td><td><span class="pill fehlt">nächster Schritt</span></td></tr>
-    </table>
-  </div>
-
-  <div class="area">
-    <div class="top"><h3>Dein Polster</h3><small>Frage 04</small></div>
-    <div class="calc">So viel hast du gespart, alles zusammen.</div>
-    <table class="rules">
-      <tr><td><i class="box"></i></td><td>10.000 € oder mehr</td><td><span class="pill ok">passt</span></td></tr>
-      <tr><td><i class="box"></i></td><td>2.000 bis 9.999 €</td><td><span class="pill fast">fast</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Weniger als 2.000 €</td><td><span class="pill fehlt">nächster Schritt</span></td></tr>
-    </table>
-  </div>
-
-  </div>
-
-  <div class="area">
-    <div class="top"><h3>Schulden und Schufa</h3><small>Fragen 02, 05, 07</small></div>
-    <div class="calc">Deine Grenze: Netto <span class="line"></span> × 0,35 = <span class="line"></span> € Raten im Monat.</div>
-    <table class="rules">
-      <tr><td><i class="box"></i></td><td>Es gibt einen negativen Schufa-Eintrag.</td><td><span class="pill fehlt">nächster Schritt</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Meine Raten liegen bei meiner Grenze oder darüber.</td><td><span class="pill fehlt">nächster Schritt</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Ich zahle Raten, aber weniger als meine Grenze.</td><td><span class="pill fast">fast</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Keine Raten, aber ich weiß nicht, was bei der Schufa steht.</td><td><span class="pill fast">fast</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Keine Raten und die Schufa ist sauber.</td><td><span class="pill ok">passt</span></td></tr>
-    </table>
-  </div>
-
-  <div class="area">
-    <div class="top"><h3>Überblick und Zeit</h3><small>Fragen 08, 09</small></div>
-    <table class="rules">
-      <tr><td><i class="box"></i></td><td>Ich weiß ehrlich gesagt nicht, wofür mein Geld draufgeht.</td><td><span class="pill fehlt">nächster Schritt</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Ich habe weniger als eine Stunde pro Woche dafür.</td><td><span class="pill fehlt">nächster Schritt</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Ich weiß so ungefähr, wofür mein Geld draufgeht.</td><td><span class="pill fast">fast</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Ich kenne meine Zahlen auf den Euro, habe aber nur 1 bis 2 Stunden pro Woche.</td><td><span class="pill fast">fast</span></td></tr>
-      <tr><td><i class="box"></i></td><td>Ich kenne meine Zahlen auf den Euro und habe 3 Stunden pro Woche oder mehr.</td><td><span class="pill ok">passt</span></td></tr>
-    </table>
-  </div>
-  <div class="foot"><span>Startklar-Check · Jutta Reichenbach</span><span>3</span></div>
-</section>
-
-<!-- ============ 4 ERGEBNIS ============ -->
-<section class="page">
-  <div class="eyebrow">Teil 3 · Dein Ergebnis</div>
-  <h2>Wo du stehst</h2>
-  <p class="muted">Zähl auf Seite 3 zusammen, wie oft du welche Stufe angekreuzt hast.</p>
+  <table class="check">
+    <thead><tr><th></th><th><span class="pill ok">passt</span></th><th class="c2"><span class="pill fast">fast</span></th><th class="c3"><span class="pill fehlt">nächster Schritt</span></th></tr></thead>
+    <tbody>
+      <tr><td><b>Gehalt und Job</b><small>Was kommt netto auf deinem Konto an, und wie bist du angestellt?</small></td>
+        <td><div class="opt"><i class="box"></i><span>Unbefristet oder verbeamtet und 2.500 € netto oder mehr</span></div></td>
+        <td class="c2"><div class="opt"><i class="box"></i><span>2.000 bis 2.499 € netto, selbstständig, befristet oder in der Probezeit</span></div></td>
+        <td class="c3"><div class="opt"><i class="box"></i><span>Unter 2.000 € netto<br><span class="rule">(mit 30.000 € Erspartem oder mehr zählt es als „fast“)</span></span></div></td></tr>
+      <tr><td><b>Was übrig bleibt</b><small>Nach Miete, Einkauf, Versicherungen und Urlaub</small></td>
+        <td><div class="opt"><i class="box"></i><span>15 % vom Netto oder mehr, mindestens 300 € im Monat</span></div></td>
+        <td class="c2"><div class="opt"><i class="box"></i><span>100 € oder mehr, aber weniger als das</span></div></td>
+        <td class="c3"><div class="opt"><i class="box"></i><span>Weniger als 100 € im Monat</span></div></td></tr>
+      <tr><td><b>Dein Polster</b><small>Tagesgeld oder Depot, alles in ein paar Wochen verfügbar</small></td>
+        <td><div class="opt"><i class="box"></i><span>10.000 € oder mehr</span></div></td>
+        <td class="c2"><div class="opt"><i class="box"></i><span>2.000 bis 9.999 €</span></div></td>
+        <td class="c3"><div class="opt"><i class="box"></i><span>Weniger als 2.000 €</span></div></td></tr>
+      <tr><td><b>Schulden und Schufa</b><small>Auto, Handy auf Raten, Möbel, Dispo. Deine Miete zählt nicht.</small></td>
+        <td><div class="opt"><i class="box"></i><span>Keine Raten und die Schufa ist sauber</span></div></td>
+        <td class="c2"><div class="opt"><i class="box"></i><span>Raten unter 35 % vom Netto, oder du weißt nicht, was bei der Schufa steht</span></div></td>
+        <td class="c3"><div class="opt"><i class="box"></i><span>Negativer Schufa-Eintrag oder Raten ab 35 % vom Netto</span></div></td></tr>
+      <tr><td><b>Überblick und Zeit</b><small>Bankgespräche, Besichtigungen, Wohnungen durchrechnen</small></td>
+        <td><div class="opt"><i class="box"></i><span>Ich kenne meine Ausgaben auf den Euro und habe 3 Stunden pro Woche oder mehr</span></div></td>
+        <td class="c2"><div class="opt"><i class="box"></i><span>Ich kenne sie so ungefähr oder habe nur 1 bis 2 Stunden pro Woche</span></div></td>
+        <td class="c3"><div class="opt"><i class="box"></i><span>Ich weiß nicht, wofür mein Geld draufgeht, oder habe weniger als 1 Stunde</span></div></td></tr>
+    </tbody>
+  </table>
 
   <div class="tally">
-    <div><span class="pill ok">passt</span><span class="count"><i></i>mal</span></div>
-    <div><span class="pill fast">fast</span><span class="count"><i></i>mal</span></div>
-    <div><span class="pill fehlt">nächster Schritt</span><span class="count"><i></i>mal</span></div>
+    <b style="font:800 11pt var(--display)">Zähl zusammen</b>
+    <span class="t"><span class="pill ok">passt</span><i></i>mal</span>
+    <span class="t"><span class="pill fast">fast</span><i></i>mal</span>
+    <span class="t"><span class="pill fehlt">nächster Schritt</span><i></i>mal</span>
   </div>
+  <div class="foot"><span>Startklar-Check · Jutta Reichenbach</span><span>1 / 2</span></div>
+</section>
 
-  <p class="muted">Jetzt kreuz an, welches Ergebnis zu dir passt. Fang oben an.</p>
+<!-- ============ SEITE 2: ERGEBNIS UND ERSTE SCHRITTE ============ -->
+<section class="page">
+  <div class="eyebrow">Dein Ergebnis</div>
+  <h2>Wo du stehst</h2>
   <div class="verdicts">
-    <div class="v good"><i class="box"></i><div>
-      <div class="rule">Kein „nächster Schritt“ und höchstens zweimal „fast“</div>
-      <div class="big">Startklar</div>
-      <p>Mit diesen Zahlen kannst du zur Bank gehen. Jetzt geht es an deine erste Wohnung.</p></div></div>
-    <div class="v warn"><i class="box"></i><div>
-      <div class="rule">Höchstens zweimal „nächster Schritt“</div>
-      <div class="big">Fast startklar</div>
-      <p>Du bist schon richtig weit. Mit ein paar Stellschrauben bist du bald bereit für deine erste Wohnung.</p></div></div>
-    <div class="v todo"><i class="box"></i><div>
-      <div class="rule">Dreimal oder öfter „nächster Schritt“</div>
-      <div class="big">Du hast ein Fundament</div>
-      <p>Darauf baust du jetzt auf. Mit deinem Plan auf den nächsten Seiten gehst du die nächsten Schritte, und ich helfe dir gern dabei.</p></div></div>
+    <div class="v good"><div class="top"><i class="box"></i><span class="if">Kein „nächster Schritt“, höchstens 2 × „fast“</span></div>
+      <div class="big">Startklar</div><p>Mit diesen Zahlen kannst du zur Bank gehen. Jetzt geht es an deine erste Wohnung.</p></div>
+    <div class="v warn"><div class="top"><i class="box"></i><span class="if">Höchstens 2 × „nächster Schritt“</span></div>
+      <div class="big">Fast startklar</div><p>Du bist schon richtig weit. Mit ein paar Stellschrauben bist du bald bereit.</p></div>
+    <div class="v todo"><div class="top"><i class="box"></i><span class="if">3 × „nächster Schritt“ oder öfter</span></div>
+      <div class="big">Du hast ein Fundament</div><p>Darauf baust du jetzt auf. Die ersten Schritte stehen hier unten.</p></div>
   </div>
 
-  <div class="card">
-    <h3>Was dein Ziel bedeutet</h3>
-    <div class="ziel">
-      <div><b>Altersvorsorge</b><span>Das ist ein Long Game: Je früher du startest, desto länger zahlen deine Mieter den Kredit für dich ab.</span></div>
-      <div><b>Finanziell unabhängig</b><span>Dafür braucht es mehr als eine Wohnung. Bei mir hat es mit einer einzigen angefangen, und die war total überteuert.</span></div>
-      <div><b>Zweites Einkommen</b><span>Ehrlich gerechnet bringt eine Wohnung am Anfang 100 oder 200 € im Monat. Interessant wird es, wenn du das wiederholst.</span></div>
-      <div><b>Vermögen aufbauen</b><span>Die Bank finanziert die Wohnung, die Miete zahlt den Kredit, und Jahr für Jahr gehört dir ein größerer Teil davon.</span></div>
-      <div><b>Noch offen</b><span>Das ist okay. Im Kennenlerngespräch klären wir als Erstes, wofür du das eigentlich machst.</span></div>
-    </div>
-  </div>
-  <div class="foot"><span>Startklar-Check · Jutta Reichenbach</span><span>4</span></div>
-</section>
-
-<!-- ============ 5 PLAN (1) ============ -->
-<section class="page">
-  <div class="eyebrow">Teil 4 · Dein Plan</div>
-  <h2>Deine nächsten Schritte</h2>
-  <p class="muted">Für jeden Bereich mit „fast“ oder „nächster Schritt“ findest du hier genau einen Schritt: den, der zu der Zeile passt, die du auf Seite 3 angekreuzt hast. Bereiche mit „passt“ überspringst du.</p>
-
-  <div class="first">
-    <div class="eyebrow" style="color:var(--ink)">Dein erster Schritt</div>
-    <p style="font-size:9.5pt">Fang mit einem Bereich an, in dem du „nächster Schritt“ hast. Gibt es mehrere, nimm sie in dieser Reihenfolge:</p>
-    <div class="order"><span>1 · Schulden und Schufa</span><span>2 · Was übrig bleibt</span><span>3 · Überblick und Zeit</span><span>4 · Dein Polster</span><span>5 · Gehalt und Job</span></div>
-    <p style="font-size:9.5pt">Mein erster Schritt ist: <b>Fang am besten noch diese Woche damit an.</b></p>
-    <div class="line"></div>
-  </div>
-
-  <div class="areahead"><h3>Schulden und Schufa</h3></div>
+  <div class="eyebrow" style="margin-top:2mm">Dein erster Schritt</div>
+  <h2>Was du diese Woche tun kannst</h2>
+  <p class="muted" style="margin-top:-2mm">Nur für die Bereiche, in denen du „fast“ oder „nächster Schritt“ angekreuzt hast. Fang mit einem „nächsten Schritt“ an.</p>
   <div class="steps">
-    <div class="step"><div class="when">Bei negativem Schufa-Eintrag</div><h3>Schufa-Eintrag klären</h3>
-      <p>Kümmer dich zuerst darum, dass der Eintrag erledigt ist und gelöscht wird. Danach ist der Weg zur Bank wieder frei.</p>
-      <ul><li><i class="box"></i>Hol dir die kostenlose Datenkopie auf der Website der Schufa.</li><li><i class="box"></i>Klär mit dem Gläubiger, wie du die offene Forderung begleichen kannst.</li><li><i class="box"></i>Lass dir die Erledigung schriftlich bestätigen und prüf danach, ob der Eintrag gelöscht ist.</li></ul></div>
-    <div class="step"><div class="when">Bei Raten über deiner Grenze</div><h3>Kleine Kredite zuerst ablösen</h3>
-      <p>Jede Rate rechnet die Bank gegen dich. Jede Rate weniger macht Platz für deine Wohnung.</p>
-      <ul><li><i class="box"></i>Schreib alle Kredite mit Restschuld und Rate untereinander.</li><li><i class="box"></i>Lös zuerst den kleinsten Kredit und den Dispo ab.</li><li><i class="box"></i>Kauf ab heute nichts Neues mehr auf Raten.</li></ul></div>
-    <div class="step"><div class="when">Bei Raten unter deiner Grenze</div><h3>Raten abbauen</h3>
-      <p>Wenn du kleine Kredite schnell ablösen kannst, mach das vor dem Banktermin. Jede Rate weniger macht eine höhere Bankrate möglich.</p>
-      <ul><li><i class="box"></i>Schreib alle Kredite mit Restschuld und Rate untereinander.</li><li><i class="box"></i>Prüf, welchen du vor dem Banktermin ganz ablösen kannst.</li></ul></div>
-    <div class="step"><div class="when">Wenn du nicht weißt, was bei der Schufa steht</div><h3>Schufa-Auskunft holen</h3>
-      <p>Die Selbstauskunft bei der Schufa bekommst du einmal im Jahr kostenlos. Dann weißt du, was die Bank sieht, bevor du hingehst.</p>
-      <ul><li><i class="box"></i>Hol dir die kostenlose Datenkopie auf der Website der Schufa.</li><li><i class="box"></i>Prüf, ob alle Einträge stimmen, und lass falsche korrigieren.</li></ul></div>
-  </div>
-  <div class="foot"><span>Startklar-Check · Jutta Reichenbach</span><span>5</span></div>
-</section>
-
-<!-- ============ 6 PLAN (2) ============ -->
-<section class="page">
-  <div class="areahead"><h3>Was übrig bleibt</h3></div>
-  <div class="steps">
-    <div class="step"><div class="when">Bei „fast“</div><h3>Kontoauszug durchgehen</h3>
-      <p>Oft stecken in Abos und Verträgen ein paar Euro, die du gar nicht vermisst. Jeder Euro mehr am Monatsende macht eine höhere Bankrate möglich.</p>
-      <ul><li><i class="box"></i>Druck dir die Kontoauszüge der letzten drei Monate aus.</li><li><i class="box"></i>Markier alle Abos und Verträge und kündige, was du nicht wirklich nutzt.</li><li><i class="box"></i>Leg den gesparten Betrag per Dauerauftrag direkt aufs Sparkonto.</li></ul></div>
-    <div class="step"><div class="when">Bei „nächster Schritt“</div><h3>Einen Monat mitschreiben</h3>
-      <p>Ich wusste am Anfang auch nicht, wie man ein Haushaltsbuch führt. Nach einem Monat siehst du genau, wo dein Geld hingeht und wo noch Luft ist.</p>
-      <ul><li><i class="box"></i>Nimm eine Haushaltsbuch-App oder ein einfaches Heft.</li><li><i class="box"></i>Schreib einen Monat lang jede Ausgabe auf, auch den Kaffee unterwegs.</li><li><i class="box"></i>Streich am Monatsende die größten Posten, die nicht sein müssen.</li></ul></div>
-  </div>
-
-  <div class="areahead"><h3>Überblick und Zeit</h3></div>
-  <div class="steps">
-    <div class="step"><div class="when">Wenn du nicht weißt, wofür dein Geld draufgeht</div><h3>Mit dem Kontoauszug anfangen</h3>
-      <p>Ein Monat reicht für den Anfang. Mit diesen Zahlen gehst du sicher ins Bankgespräch, und ich kann dir viel genauer sagen, was für dich möglich ist.</p>
-      <ul><li><i class="box"></i>Nimm dir die Kontoauszüge vom letzten Monat.</li><li><i class="box"></i>Teil jede Ausgabe in feste Kosten und alles andere.</li><li><i class="box"></i>Rechne aus, was am Ende übrig bleibt. Diese Zahl brauchst du für die Bank.</li></ul></div>
-    <div class="step"><div class="when">Bei weniger als einer Stunde pro Woche</div><h3>Feste Zeit einplanen</h3>
-      <p>Am Anfang brauchst du ein paar Stunden pro Woche für Bankgespräche und Besichtigungen. Den Rest gehen wir zusammen an.</p>
-      <ul><li><i class="box"></i>Such dir einen festen Abend pro Woche aus.</li><li><i class="box"></i>Trag ihn dir für die nächsten acht Wochen in den Kalender ein.</li><li><i class="box"></i>Nutz den ersten Abend, um deine Unterlagen für die Bank zu sammeln.</li></ul></div>
-    <div class="step"><div class="when">Wenn du so ungefähr Bescheid weißt</div><h3>Zahlen auf den Euro genau</h3>
-      <p>Die Bank will deine Einnahmen und Ausgaben schwarz auf weiß sehen. Mit einer sauberen Übersicht gehst du viel sicherer ins Gespräch.</p>
-      <ul><li><i class="box"></i>Schreib alle festen Kosten mit Betrag auf, von der Miete bis zum Handyvertrag.</li><li><i class="box"></i>Ergänz deine Durchschnittsausgaben für Lebensmittel und Freizeit.</li><li><i class="box"></i>Mach daraus eine Seite, die du jeder Bank zeigen kannst.</li></ul></div>
-    <div class="step"><div class="when">Bei 1 bis 2 Stunden pro Woche</div><h3>Feste Termine eintragen</h3>
-      <p>Mit ein paar Stunden pro Woche kommst du gut voran, vor allem wenn sie fest im Kalender stehen.</p>
-      <ul><li><i class="box"></i>Leg dir zwei feste Termine pro Woche in den Kalender.</li><li><i class="box"></i>Nutz einen davon, um Wohnungsangebote anzuschauen und durchzurechnen.</li></ul></div>
-  </div>
-  <div class="foot"><span>Startklar-Check · Jutta Reichenbach</span><span>6</span></div>
-</section>
-
-<!-- ============ 7 PLAN (3) ============ -->
-<section class="page">
-  <div class="areahead"><h3>Gehalt und Job</h3></div>
-  <div class="steps">
-    <div class="step"><div class="when">Bei Befristung oder Probezeit</div><h3>Die Zeit bis dahin nutzen</h3>
-      <p>Viele Banken finanzieren, sobald die Probezeit vorbei oder der Vertrag unbefristet ist. Bring bis dahin deine Unterlagen und dein Polster in Form, dann startest du direkt durch.</p>
-      <ul><li><i class="box"></i>Frag in der Personalabteilung nach, wann deine Probezeit endet oder ob eine Entfristung geplant ist.</li><li><i class="box"></i>Sammle schon jetzt deine letzten drei Gehaltsnachweise.</li><li><i class="box"></i>Trag dir den Tag nach der Probezeit in den Kalender ein und meld dich an dem Tag bei mir.</li></ul></div>
-    <div class="step"><div class="when">Netto unter 2.000 € und weniger als 30.000 € gespart</div><h3>Einkommen oder Erspartes stärken</h3>
-      <p>Die Bank schaut zuerst aufs Gehalt. Schon ein kleines Nebeneinkommen oder ein wachsendes Sparkonto macht dich für die Bank interessanter.</p>
-      <ul><li><i class="box"></i>Schreib auf, welches Nebeneinkommen für dich denkbar wäre, zum Beispiel Nachhilfe oder Honorararbeit.</li><li><i class="box"></i>Richte einen Sparplan ein, der jeden Monat automatisch läuft.</li><li><i class="box"></i>Lass uns im Kennenlerngespräch schauen, welcher Weg bei dir am schnellsten wirkt.</li></ul></div>
-    <div class="step"><div class="when">Netto unter 2.000 €, aber 30.000 € oder mehr gespart</div><h3>Mit deinem Ersparten punkten</h3>
-      <p>Zeig der Bank dein Gehalt und dein Erspartes zusammen. Das Ersparte gleicht einiges aus. Mit einem kleinen Nebeneinkommen stehst du noch stärker da.</p>
-      <ul><li><i class="box"></i>Hol dir einen aktuellen Auszug von deinem Sparkonto oder Depot.</li><li><i class="box"></i>Leg ihn zusammen mit deinen letzten drei Gehaltsnachweisen in einen Ordner für die Bank.</li></ul></div>
-    <div class="step"><div class="when">Bei Selbstständigkeit</div><h3>Jahresabschlüsse bereitlegen</h3>
-      <p>Banken schauen bei Selbstständigen auf die Entwicklung über mehrere Jahre. Je früher deine Steuerberatung Bescheid weiß, desto besser sehen deine Zahlen bei der Bank aus.</p>
-      <ul><li><i class="box"></i>Frag deine Steuerberatung nach den Jahresabschlüssen der letzten zwei bis drei Jahre.</li><li><i class="box"></i>Lass dir eine aktuelle betriebswirtschaftliche Auswertung (BWA) dazu geben.</li><li><i class="box"></i>Trenn private und geschäftliche Konten sauber voneinander.</li></ul></div>
-    <div class="step"><div class="when">Netto zwischen 2.000 und 2.499 €</div><h3>Gehaltsnachweise bereitlegen</h3>
-      <p>Bei 110 % schaut die Bank etwas genauer hin. Mit ordentlichen Unterlagen und einem regelmäßigen Sparbetrag überzeugst du sie.</p>
-      <ul><li><i class="box"></i>Leg deine letzten drei Gehaltsnachweise in einen Ordner für die Bank.</li><li><i class="box"></i>Richte einen Dauerauftrag aufs Sparkonto ein, damit die Bank jeden Monat einen Sparbetrag sieht.</li></ul></div>
-  </div>
-  <div class="foot"><span>Startklar-Check · Jutta Reichenbach</span><span>7</span></div>
-</section>
-
-<!-- ============ 8 SCHLUSS ============ -->
-<section class="page">
-  <div class="areahead"><h3>Dein Polster</h3></div>
-  <div class="steps">
-    <div class="step"><div class="when">Bei „fast“</div><h3>Polster weiter aufbauen</h3>
-      <p>Bei 110 % zahlt die Bank auch die Kaufnebenkosten. Für eine Reparatur oder einen Monat ohne Mieter brauchst du trotzdem eine Rücklage. Am einfachsten wächst sie automatisch.</p>
-      <ul><li><i class="box"></i>Eröffne ein eigenes Tagesgeldkonto nur für deine Rücklage.</li><li><i class="box"></i>Leg einen Dauerauftrag auf den Tag nach dem Gehalt.</li><li><i class="box"></i>Erhöh den Betrag nach drei Monaten ein Stück.</li></ul></div>
-    <div class="step"><div class="when">Bei „nächster Schritt“</div><h3>Dauerauftrag einrichten</h3>
-      <p>Bei 110 % zahlt die Bank auch die Kaufnebenkosten. Für Überraschungen an der Wohnung brauchst du trotzdem eine Rücklage. Die baust du am einfachsten automatisch auf.</p>
-      <ul><li><i class="box"></i>Eröffne ein eigenes Tagesgeldkonto nur für deine Rücklage.</li><li><i class="box"></i>Leg einen Dauerauftrag auf den Tag nach dem Gehalt, auch wenn es erst ein kleiner Betrag ist.</li><li><i class="box"></i>Erhöh den Betrag nach drei Monaten ein Stück.</li></ul></div>
-  </div>
-
-  <div class="eyebrow" style="margin-top:2mm">Und dann?</div>
-  <h2>Wie es weitergeht</h2>
-
-  <div class="step">
-    <div class="when">Wenn du startklar bist</div><h3>Erste Wohnung durchrechnen</h3>
-    <p>Deine Zahlen passen. Jetzt lohnt es sich, echte Wohnungen anzuschauen und durchzurechnen.</p>
-    <ul><li><i class="box"></i>Such dir drei Wohnungsangebote in deiner Gegend heraus.</li><li><i class="box"></i>Rechne bei jeder: Kaltmiete minus Bankrate minus nicht umlagefähiges Hausgeld.</li><li><i class="box"></i>Bleibt ein Plus, meld dich bei mir, dann schauen wir sie zusammen an.</li></ul>
-  </div>
-
-  <div class="next">
-    <div class="eyebrow">Startklar oder fast startklar?</div>
-    <p><b>Der Exposé-Check.</b> Lade ein Exposé hoch und sieh in zwei Minuten, ob nach Bankrate und Hausgeld ein Plus bleibt.</p>
+    <div><b>Schulden und Schufa</b><span><p>Hol dir die kostenlose Datenkopie auf der Website der Schufa. Dann weißt du, was die Bank sieht.</p><p>Bei Raten: Schreib alle Kredite mit Restschuld untereinander und lös den kleinsten und den Dispo zuerst ab.</p></span></div>
+    <div><b>Was übrig bleibt</b><span><p>Geh die Kontoauszüge der letzten drei Monate durch und kündige Abos, die du nicht wirklich nutzt.</p><p>Bleibt kaum etwas übrig: Schreib einen Monat lang jede Ausgabe auf, auch den Kaffee unterwegs.</p></span></div>
+    <div><b>Überblick und Zeit</b><span><p>Schreib alle festen Kosten auf eine Seite, von der Miete bis zum Handyvertrag.</p><p>Trag dir einen festen Abend pro Woche in den Kalender ein, für die nächsten acht Wochen.</p></span></div>
+    <div><b>Dein Polster</b><span><p>Eröffne ein eigenes Tagesgeldkonto nur für deine Rücklage und leg einen Dauerauftrag auf den Tag nach dem Gehalt, auch wenn es erst ein kleiner Betrag ist.</p></span></div>
+    <div><b>Gehalt und Job</b><span><p>Leg deine letzten drei Gehaltsnachweise in einen Ordner für die Bank. Selbstständig: Frag deine Steuerberatung nach den Jahresabschlüssen der letzten zwei bis drei Jahre.</p><p>In der Probezeit: Trag dir den Tag danach in den Kalender ein und meld dich dann bei mir.</p></span></div>
   </div>
 
   <div class="cta">
     <h2>Lass uns draufschauen</h2>
-    <p>Im kostenlosen Kennenlerngespräch schauen wir gemeinsam auf deine Zahlen und finden heraus, wie dein Weg zur ersten Wohnung aussieht. Ich habe selbst mit einer einzigen Wohnung angefangen, heute sind es mehr als 20.</p>
-    <p>Schreib mir einfach eine Nachricht mit dem Wort <b style="color:var(--gelb)">„Startklar“</b>.</p>
-    <a class="btn" href="https://www.instagram.com/juttareichenbach/">Schreib mir auf Instagram · @juttareichenbach</a>
+    <p>Im kostenlosen Kennenlerngespräch schauen wir gemeinsam auf deine Zahlen und finden heraus, wie dein Weg zur ersten Wohnung aussieht. Ich habe selbst mit einer einzigen Wohnung angefangen, heute sind es mehr als 20. Schreib mir einfach eine Nachricht mit dem Wort <b style="color:var(--gelb)">„Startklar“</b>.</p>
+    <a class="btn" href="https://www.instagram.com/juttareichenbach/">Schreib mir<br>auf Instagram<br>@juttareichenbach</a>
   </div>
 
-  <p class="legal" style="margin-top:auto">Dieser Check ist eine allgemeine Einschätzung und ersetzt keine Finanz- oder Steuerberatung. Jede Bank rechnet anders. Jutta Reichenbach · Rheinauer Ring 109 · 76437 Rastatt · hallo@juttareichenbach.com · Impressum und Datenschutz: startklar.juttareichenbach.com</p>
-  <div class="foot"><span>Startklar-Check · Jutta Reichenbach</span><span>8</span></div>
+  <p class="legal">Diese Checkliste ist eine allgemeine Einschätzung und ersetzt keine Finanz- oder Steuerberatung. Jede Bank rechnet anders. Den ausführlichen Check mit deinem persönlichen Plan findest du auf startklar.juttareichenbach.com.<br>Jutta Reichenbach · Rheinauer Ring 109 · 76437 Rastatt · hallo@juttareichenbach.com</p>
+  <div class="foot"><span>Startklar-Check · Jutta Reichenbach</span><span>2 / 2</span></div>
 </section>
 
 </body>
