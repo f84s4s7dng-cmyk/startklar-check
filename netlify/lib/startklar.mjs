@@ -16,7 +16,7 @@ export const CTA = {
   warn: "Die letzten Stellschrauben drehen wir am schnellsten zusammen. Im kostenlosen Kennenlerngespräch schauen wir, welche zuerst dran ist, damit du bald loslegen kannst.",
   todo: "Dein Fundament steht. Im kostenlosen Kennenlerngespräch machen wir daraus einen Plan mit festen Etappen bis zu deiner ersten Wohnung.",
 };
-export const PROOF = "Ich habe selbst mit einer einzigen Wohnung angefangen, heute sind es mehr als 20. Schreib mir einfach eine Nachricht mit dem Wort „Startklar“.";
+export const PROOF = "Ich habe selbst mit einer einzigen Wohnung angefangen, heute sind es mehr als 20. Buch dir direkt einen Termin oder schreib mir auf Instagram das Wort „Startklar“.";
 export const GOOD_STEP = { step: "Erste Wohnung durchrechnen", tip: "Deine Zahlen passen. Jetzt lohnt es sich, echte Wohnungen anzuschauen und durchzurechnen.", do: ["Such dir drei Wohnungsangebote in deiner Gegend heraus.", "Rechne bei jeder: Kaltmiete minus Bankrate minus nicht umlagefähiges Hausgeld.", "Bleibt ein Plus, meld dich bei mir, dann schauen wir sie zusammen an."] };
 export const PILL = { ok: ["passt", "#DDEBE1", "#2F7A4F"], fast: ["fast", "#FBEFC2", "#6A5200"], fehlt: ["nächster Schritt", "#D3DFD1", "#15253A"] };
 
@@ -45,7 +45,7 @@ export function clean(r) {
 
 export function resultMail(name, r) {
   const [bg, fg, label] = VERDICT[r.verdict];
-  const kennenlern = process.env.KENNENLERN_LINK || "https://www.instagram.com/juttareichenbach/", ctaText = process.env.KENNENLERN_LINK ? "Kennenlerngespräch buchen" : "Schreib mir auf Instagram", expose = process.env.EXPOSE_CHECK_LINK;
+  const calendly = process.env.KENNENLERN_LINK || "https://calendly.com/jutta_immoimpuls/kennenlernen", insta = "https://www.instagram.com/juttareichenbach/", expose = process.env.EXPOSE_CHECK_LINK;
   // Reihenfolge: erst "nächster Schritt", dann "fast"; innerhalb davon der Bereich mit dem größten Hebel zuerst
   const PRIO = { "Schulden und Schufa": 0, "Was übrig bleibt": 1, "Überblick und Zeit": 2, "Dein Polster": 3, "Gehalt und Job": 4 };
   const rank = (a) => (a.st === "fehlt" ? 0 : 10) + (PRIO[a.name] ?? 5);
@@ -53,6 +53,7 @@ export function resultMail(name, r) {
   const steps = todo.length ? todo : (r.verdict === "good" ? [GOOD_STEP] : []);
   const first = steps[0], rest = steps.slice(1);
   const doList = (d) => d && d.length ? `<ul style="list-style:none;padding:0;margin:6px 0 0">${d.map((x) => `<li style="font-size:14px;margin:4px 0;padding-left:24px;text-indent:-24px">&#9744;&nbsp;&nbsp;${esc(x)}</li>`).join("")}</ul>` : "";
+  const btnA = (href, text, yellow = true) => `<a href="${esc(href)}" style="display:inline-block;margin:0 0 8px;background:${yellow ? "#F4C430" : "#15253A"};color:${yellow ? "#15253A" : "#FAF6EC"};padding:12px 18px;border-radius:12px;font-family:'Plus Jakarta Sans',Arial,Helvetica,sans-serif;text-decoration:none;font-weight:bold">${text}</a>`;
   const btn = (href, text, yellow = true) => `<p style="margin:20px 0"><a href="${esc(href)}" style="background:${yellow ? "#F4C430" : "#15253A"};color:${yellow ? "#15253A" : "#FAF6EC"};padding:12px 18px;border-radius:12px;font-family:'Plus Jakarta Sans',Arial,Helvetica,sans-serif;text-decoration:none;font-weight:bold">${text}</a></p>`;
   return `<!doctype html><html><head><meta charset="utf-8"></head><body style="margin:0;background:#FAF6EC;font-family:'Plus Jakarta Sans',Arial,Helvetica,sans-serif;color:#15253A">
 <div style="max-width:560px;margin:0 auto;padding:24px 16px">
@@ -79,7 +80,7 @@ ${doList(first.do)}
 </div>` : ""}
 ${rest.length ? `<p style="font-size:14px;margin:18px 0 6px"><b>Danach geht es so weiter:</b></p><ol style="padding-left:20px;font-size:14px;margin:0">${rest.map((a) => `<li style="margin-bottom:14px"><b>${esc(a.step)}</b><br>${esc(a.tip)}${doList(a.do)}</li>`).join("")}</ol>` : ""}
 ${expose && r.verdict !== "todo" ? btn(expose, "Zum Exposé-Check", false) : ""}
-${kennenlern ? `<h2 style="font-family:Outfit,Arial,Helvetica,sans-serif;font-weight:800;font-size:22px;margin:24px 0 8px">Lass uns draufschauen</h2><p style="font-size:14px">${CTA[r.verdict]} ${PROOF}</p>${btn(kennenlern, ctaText)}` : ""}
+${calendly ? `<h2 style="font-family:Outfit,Arial,Helvetica,sans-serif;font-weight:800;font-size:22px;margin:24px 0 8px">Lass uns draufschauen</h2><p style="font-size:14px">${CTA[r.verdict]} ${PROOF}</p><p style="margin:20px 0">${btnA(calendly, "Gespräch buchen")}&nbsp;&nbsp;${btnA(insta, "Schreib mir auf Instagram", false)}</p>` : ""}
 <p>Viele Grüße<br>Jutta</p>
 <p style="font-size:11px;color:#56636F">Allgemeine Einschätzung, ersetzt keine Finanz- oder Steuerberatung. Jede Bank rechnet anders.</p>
 </div></body></html>`;
