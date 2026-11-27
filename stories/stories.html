@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Story-Vorlagen Startklar-Check</title>
+<style>
+/* 10 Instagram-Story-Vorlagen, je 1080 x 1920. Bauen: node stories/build.mjs
+   Fotos liegen in stories/fotos/ (Dateinamen siehe README). Fehlt ein Foto, steht dort ein Platzhalter.
+   .link = freie Fläche für den Link-Sticker. In der Ausgabe ohne Markierung ist sie leer. */
+@font-face{font-family:'Outfit';font-weight:500;src:url(../public/fonts/Outfit-Medium.woff) format('woff')}
+@font-face{font-family:'Outfit';font-weight:700;src:url(../public/fonts/Outfit-Bold.woff) format('woff')}
+@font-face{font-family:'Outfit';font-weight:800;src:url(../public/fonts/Outfit-ExtraBold.woff) format('woff')}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400;src:url(../public/fonts/PlusJakartaSans-Regular.woff) format('woff')}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:500;src:url(../public/fonts/PlusJakartaSans-Medium.woff) format('woff')}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:700;src:url(../public/fonts/PlusJakartaSans-Bold.woff) format('woff')}
+:root{--ink:#15253A;--ink2:#1E3247;--ink3:#273B52;--muted:#56636F;--line:#E3DDCF;--creme:#FAF6EC;--surface:#FFFDF8;
+  --gelb:#F4C430;--gelb-hell:#FBEFC2;--salbei:#9FB4A0;--salbei-hell:#D3DFD1;--grau:#C9D1D9;
+  --display:'Outfit',Arial,sans-serif;--body:'Plus Jakarta Sans',Arial,sans-serif}
+*{box-sizing:border-box;margin:0}
+body{background:#888;display:flex;flex-wrap:wrap;gap:40px;padding:40px;font-family:var(--body)}
+.story{width:1080px;height:1920px;position:relative;overflow:hidden;background:var(--creme);color:var(--ink);flex:none}
+.dunkel{background:var(--ink);color:var(--creme)}
+.salbei{background:var(--salbei-hell)}
+
+/* Sicherer Bereich: oben 250, unten 300 frei für die Instagram-Bedienelemente */
+.inhalt{position:absolute;left:96px;right:96px;top:250px;bottom:300px;display:flex;flex-direction:column}
+
+.marke{display:flex;align-items:center;gap:22px;font:800 34px/1 var(--display);letter-spacing:.06em}
+.marke svg{width:78px;height:78px;flex:none}
+.marke span{font-weight:500;color:var(--salbei)}
+.dunkel .marke{color:var(--creme)}
+.eyebrow{font:700 30px/1 var(--body);letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:18px;color:var(--muted)}
+.eyebrow::before{content:"";width:18px;height:18px;border-radius:50%;background:var(--salbei);flex:none}
+.dunkel .eyebrow{color:var(--salbei-hell)}
+h1{font:800 132px/1 var(--display);letter-spacing:-.015em}
+h1 em{font-style:normal;color:var(--gelb)}
+.creme h1 em,.salbei h1 em{color:var(--ink);background:linear-gradient(transparent 62%,var(--gelb) 62%,var(--gelb) 92%,transparent 92%)}
+h2{font:800 92px/1.04 var(--display);letter-spacing:-.01em}
+.lead{font:500 46px/1.35 var(--body)}
+.dunkel .lead{color:var(--grau)}
+.klein{font:500 34px/1.4 var(--body);color:var(--muted)}
+.dunkel .klein{color:var(--grau)}
+.chips{display:flex;flex-wrap:wrap;gap:16px}
+.chip{font:700 32px/1 var(--body);padding:20px 30px;border-radius:99px;background:var(--surface);border:2px solid var(--line)}
+.dunkel .chip{background:var(--ink2);border-color:var(--ink3);color:var(--creme)}
+.sonne{position:absolute;border-radius:50%;background:var(--gelb)}
+
+/* Link-Sticker-Zone */
+.link{position:relative;height:190px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:14px;flex:none}
+.link .tipp{font:700 34px/1 var(--display);letter-spacing:.04em;display:flex;align-items:center;gap:14px}
+.link .tipp svg{width:40px;height:40px}
+.link .feld{width:620px;height:110px;border-radius:24px}
+.markiert .link .feld{border:4px dashed #E0457B;display:flex;align-items:center;justify-content:center;font:700 30px var(--body);color:#E0457B;background:rgba(224,69,123,.08)}
+.markiert .link .feld::after{content:"Link-Sticker hier";}
+.url{font:500 28px/1 var(--body);text-align:center;color:var(--muted);margin-top:16px;letter-spacing:.02em}
+.dunkel .url{color:var(--grau)}
+
+/* Foto */
+.foto{position:absolute;inset:0;background:var(--salbei-hell)}
+.foto img{width:100%;height:100%;object-fit:cover;display:block}
+.foto.leer img{display:none}
+.foto.leer{background:repeating-linear-gradient(135deg,#C8D6C6 0 40px,#D3DFD1 40px 80px);display:flex;align-items:flex-start;justify-content:center;padding-top:560px}
+.foto.leer::after{content:"FOTO: " attr(data-label);font:800 44px/1.2 var(--display);color:var(--ink);background:var(--creme);padding:28px 40px;border-radius:24px;text-align:center;max-width:760px}
+.verlauf-unten::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(21,37,58,.0) 35%,rgba(21,37,58,.78) 72%,rgba(21,37,58,.92))}
+.verlauf-oben::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(21,37,58,.75),rgba(21,37,58,0) 38%)}
+.ueber{z-index:2}
+.karte{background:var(--creme);color:var(--ink);border-radius:40px;padding:56px 60px;box-shadow:0 30px 80px rgba(21,37,58,.25)}
+
+/* PDF-Mockup */
+.blatt{background:#fff;padding:14px;border-radius:10px;box-shadow:0 40px 90px rgba(21,37,58,.35),0 6px 18px rgba(21,37,58,.2)}
+.blatt img{display:block;width:100%;border-radius:4px}
+.stift{position:absolute;width:30px;height:520px;border-radius:15px;background:linear-gradient(90deg,#E2A800,#F4C430 45%,#C99A00);box-shadow:0 20px 40px rgba(21,37,58,.3)}
+.stift::before{content:"";position:absolute;bottom:-46px;left:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:50px solid #EBD3A0}
+.stift::after{content:"";position:absolute;bottom:-46px;left:11px;border-left:4px solid transparent;border-right:4px solid transparent;border-top:13px solid var(--ink)}
+.schloss{width:120px;height:120px;border-radius:32px;background:var(--ink2);border:2px solid var(--ink3);display:flex;align-items:center;justify-content:center}
+.schloss svg{width:64px;height:64px}
+
+/* Stufen */
+.stufen{display:flex;flex-direction:column;gap:22px}
+.stufe{display:flex;align-items:center;gap:30px;background:var(--surface);border:2px solid var(--line);border-radius:30px;padding:34px 40px;font:800 52px/1.1 var(--display)}
+.stufe i{width:44px;height:44px;border-radius:50%;flex:none;border:5px solid var(--ink)}
+.stufe:nth-child(1) i{background:var(--salbei-hell)}
+.stufe:nth-child(2) i{background:var(--gelb-hell)}
+.stufe:nth-child(3) i{background:#2F7A4F;border-color:#2F7A4F}
+.stufe small{display:block;font:500 30px/1.3 var(--body);color:var(--muted);margin-top:6px}
+
+/* Mythos */
+.mythos{background:var(--surface);border:2px solid var(--line);border-radius:36px;padding:52px 56px;position:relative}
+.mythos .zitat{font:800 66px/1.1 var(--display);color:var(--muted);text-decoration:line-through;text-decoration-color:#E04B3A;text-decoration-thickness:7px}
+.mythos .tag{position:absolute;top:-28px;left:48px;font:700 28px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:var(--creme);padding:16px 24px;border-radius:99px}
+
+/* Liste */
+.liste{display:flex;flex-direction:column;gap:30px;counter-reset:n}
+.liste li{list-style:none;display:grid;grid-template-columns:96px 1fr;gap:32px;align-items:start;font:500 44px/1.3 var(--body)}
+.liste li::before{counter-increment:n;content:counter(n);width:96px;height:96px;border-radius:28px;background:var(--gelb);color:var(--ink);font:800 54px/96px var(--display);text-align:center}
+.liste b{font-family:var(--display);font-weight:800;display:block;font-size:50px;line-height:1.1;margin-bottom:6px}
+</style>
+</head>
+<body>
+<!-- Logo als Symbol, wird unten mehrfach benutzt -->
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="logo" viewBox="0 0 80 80"><rect x="4" y="4" width="72" height="72" rx="18" fill="#15253A" stroke="#273B52" stroke-width="2"/><circle cx="60" cy="18" r="7" fill="#F4C430"/><path d="M16 40 L38 21 L60 40" fill="none" stroke="#9FB4A0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><text x="38" y="63" text-anchor="middle" font-family="Outfit" font-weight="800" font-size="22" fill="#FAF6EC">JR</text></symbol>
+  <symbol id="pfeil" viewBox="0 0 24 24"><path d="M12 4v15m0 0l-6-6m6 6l6-6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="schloss" viewBox="0 0 24 24"><g fill="none" stroke="#F4C430" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></g></symbol>
+</svg>
+
+<!-- ============ OHNE FOTO ============ -->
+
+<!-- 01 Die große Frage -->
+<section class="story dunkel" id="01-die-frage" data-ziel="check">
+  <div class="sonne" style="width:420px;height:420px;right:-120px;top:120px"></div>
+  <div class="inhalt">
+    <div class="marke"><svg><use href="#logo"/></svg><div>JUTTA <span>REICHENBACH</span></div></div>
+    <div style="margin-top:auto" class="eyebrow">Startklar-Check · kostenlos</div>
+    <h1 style="margin-top:36px">Bist du <em>startklar</em> für deine erste Immobilie?</h1>
+    <p class="lead" style="margin-top:44px">Neun Fragen, zwei Minuten. Dann weißt du, wo du stehst und was dir noch fehlt.</p>
+    <div class="link" style="margin-top:auto"><div class="tipp"><svg><use href="#pfeil"/></svg>Hier geht's zum Check</div><div class="feld"></div></div>
+    <div class="url" data-url="check"></div>
+  </div>
+</section>
+
+<!-- 02 Drei Fragen -->
+<section class="story creme" id="02-drei-fragen" data-ziel="check">
+  <div class="inhalt">
+    <div class="eyebrow">Vor der ersten Wohnung</div>
+    <h2 style="margin-top:30px">Drei Fragen, die du <span style="background:linear-gradient(transparent 60%,var(--gelb) 60%,var(--gelb) 92%,transparent 92%)">ehrlich</span> beantworten solltest</h2>
+    <ol class="liste" style="margin-top:70px;padding:0">
+      <li><div><b>Was bleibt am Monatsende?</b>Nach Miete, Einkauf und Urlaub.</div></li>
+      <li><div><b>Wie groß ist dein Polster?</b>Geld, das du in ein paar Wochen hast.</div></li>
+      <li><div><b>Was steht bei der Schufa?</b>Raten fürs Handy zählen mit.</div></li>
+    </ol>
+    <p class="klein" style="margin-top:56px">Die anderen sechs Fragen und deine Auswertung bekommst du im Startklar-Check.</p>
+    <div class="link" style="margin-top:auto"><div class="tipp"><svg><use href="#pfeil"/></svg>Zum kostenlosen Check</div><div class="feld"></div></div>
+    <div class="url" data-url="check"></div>
+  </div>
+</section>
+
+<!-- 03 Lieber auf Papier (PDF-Mockup) -->
+<section class="story salbei" id="03-lieber-auf-papier" data-ziel="papier">
+  <div class="inhalt">
+    <div class="eyebrow">Neu · zum Ausdrucken</div>
+    <h1 style="margin-top:30px;font-size:120px">Lieber auf <em>Papier?</em></h1>
+    <p class="lead" style="margin-top:30px">Die Startklar-Checkliste: zwei Seiten, ein Stift, dein Kontoauszug.</p>
+    <div style="position:relative;margin:56px auto 0;width:610px">
+      <div class="blatt" style="transform:rotate(-4deg)"><img src="checkliste-seite1.png" alt=""></div>
+      <div class="stift" style="right:-60px;top:120px;transform:rotate(18deg)"></div>
+    </div>
+    <div class="link" style="margin-top:auto"><div class="tipp"><svg><use href="#pfeil"/></svg>Checkliste holen</div><div class="feld"></div></div>
+    <div class="url" data-url="papier"></div>
+  </div>
+</section>
+
+<!-- 04 Deine Zahlen bleiben bei dir -->
+<section class="story dunkel" id="04-zahlen-bleiben-bei-dir" data-ziel="papier">
+  <div class="inhalt">
+    <div class="schloss"><svg><use href="#schloss"/></svg></div>
+    <h2 style="margin-top:60px">Du gibst deine Zahlen nicht gern online ein?</h2>
+    <p class="lead" style="margin-top:44px">Verstehe ich. Deshalb gibt es den Startklar-Check auch als Checkliste zum Ausdrucken.</p>
+    <div class="chips" style="margin-top:56px">
+      <div class="chip">2 Seiten PDF</div><div class="chip">kostenlos</div><div class="chip">alles bleibt bei dir</div>
+    </div>
+    <p class="lead" style="margin-top:56px;color:var(--gelb);font-family:var(--display);font-weight:700;font-size:52px">Kreuzchen setzen, zusammenzählen, fertig.</p>
+    <div class="link" style="margin-top:auto"><div class="tipp"><svg><use href="#pfeil"/></svg>Checkliste holen</div><div class="feld"></div></div>
+    <div class="url" data-url="papier"></div>
+  </div>
+</section>
+
+<!-- 05 Mythos -->
+<section class="story creme" id="05-mythos-eigenkapital" data-ziel="check">
+  <div class="inhalt">
+    <div class="eyebrow">Mythos-Check</div>
+    <div class="mythos" style="margin-top:70px"><div class="tag">Hör ich oft</div><div class="zitat">„Ohne 20 % Eigenkapital brauch ich gar nicht anfangen.“</div></div>
+    <h2 style="margin-top:80px">Nicht unbedingt.</h2>
+    <p class="lead" style="margin-top:30px">Ob du startklar bist, hängt an mehr als einer Zahl: an deinem Job, an dem, was übrig bleibt, an deiner Schufa. Schau dir alles zusammen an.</p>
+    <div class="link" style="margin-top:auto"><div class="tipp"><svg><use href="#pfeil"/></svg>Finde raus, wo du stehst</div><div class="feld"></div></div>
+    <div class="url" data-url="check"></div>
+  </div>
+</section>
+
+<!-- 06 Welche Stufe -->
+<section class="story salbei" id="06-welche-stufe" data-ziel="check">
+  <div class="inhalt">
+    <div class="eyebrow">Startklar-Check</div>
+    <h2 style="margin-top:30px">Welche Stufe bist du gerade?</h2>
+    <div class="stufen" style="margin-top:64px">
+      <div class="stufe"><i></i><div>Du hast ein Fundament<small>Darauf baust du jetzt auf.</small></div></div>
+      <div class="stufe"><i></i><div>Fast startklar<small>Noch ein paar Stellschrauben.</small></div></div>
+      <div class="stufe"><i></i><div>Startklar<small>Damit kannst du zur Bank gehen.</small></div></div>
+    </div>
+    <p class="klein" style="margin-top:48px;color:var(--ink)">Dazu bekommst du deinen Plan mit den nächsten Schritten per Mail.</p>
+    <div class="link" style="margin-top:auto"><div class="tipp"><svg><use href="#pfeil"/></svg>Jetzt testen, 2 Minuten</div><div class="feld"></div></div>
+    <div class="url" data-url="check"></div>
+  </div>
+</section>
+
+<!-- ============ MIT FOTO ============ -->
+
+<!-- 07 Mütze im Winter -->
+<section class="story" id="07-foto-muetze-winter" data-ziel="check">
+  <div class="foto" data-label="Mütze im Winter"><img src="fotos/muetze-winter.jpg" alt=""></div>
+  <div class="inhalt ueber">
+    <div class="karte" style="margin-top:auto">
+      <div class="eyebrow">Plan fürs neue Jahr?</div>
+      <h2 style="margin-top:24px;font-size:80px">Draußen ist Winter. Drinnen planst du deine erste Wohnung.</h2>
+      <p class="klein" style="margin-top:24px;color:var(--ink)">Mach den kostenlosen Startklar-Check und sieh in zwei Minuten, wo du stehst.</p>
+    </div>
+    <div class="link"><div class="tipp" style="color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.4)"><svg><use href="#pfeil"/></svg>Zum Check</div><div class="feld"></div></div>
+  </div>
+</section>
+
+<!-- 08 Garderobe -->
+<section class="story verlauf-unten" id="08-foto-garderobe" data-ziel="check">
+  <div class="foto" data-label="An der Garderobe"><img src="fotos/garderobe.jpg" alt=""></div>
+  <div class="inhalt ueber dunkel" style="background:none">
+    <div style="margin-top:auto" class="eyebrow">Jacke aus, kurz hinsetzen</div>
+    <h1 style="margin-top:28px;font-size:112px;color:#fff">Zwei Minuten für deine <em>erste Immobilie</em></h1>
+    <p class="lead" style="margin-top:30px;color:#E7ECEF">Neun Fragen, und du weißt, was dir noch fehlt.</p>
+    <div class="link"><div class="tipp" style="color:#fff"><svg><use href="#pfeil"/></svg>Hier geht's zum Check</div><div class="feld"></div></div>
+  </div>
+</section>
+
+<!-- 09 KI-Foto: Küchentisch mit Checkliste -->
+<section class="story verlauf-oben" id="09-ki-foto-kuechentisch" data-ziel="papier">
+  <div class="foto" data-label="Dein KI-Foto"><img src="fotos/ki-kuechentisch.jpg" alt=""></div>
+  <div class="inhalt ueber">
+    <div class="eyebrow" style="color:var(--salbei-hell)">Checkliste zum Ausdrucken</div>
+    <h1 style="margin-top:26px;font-size:112px;color:#fff">Abends, mit Tee und <em style="color:var(--gelb)">Stift.</em></h1>
+    <div class="karte" style="margin-top:auto;padding:44px 52px">
+      <p style="font:700 44px/1.25 var(--display)">Der Startklar-Check auf zwei Seiten Papier.</p>
+      <p class="klein" style="margin-top:14px;color:var(--ink)">Kostenlos. Deine Zahlen bleiben bei dir.</p>
+    </div>
+    <div class="link"><div class="tipp" style="color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.5)"><svg><use href="#pfeil"/></svg>Checkliste holen</div><div class="feld"></div></div>
+  </div>
+</section>
+
+<!-- 10 Foto oben + Checkliste -->
+<section class="story creme" id="10-foto-und-checkliste" data-ziel="papier">
+  <div class="foto" data-label="Dein Foto (z. B. Mütze oder Garderobe)" style="bottom:auto;height:900px;padding-top:300px"><img src="fotos/foto-10.jpg" alt=""></div>
+  <div style="position:absolute;left:600px;top:560px;width:400px;z-index:3">
+    <div class="blatt" style="transform:rotate(5deg)"><img src="checkliste-seite1.png" alt=""></div>
+  </div>
+  <div class="inhalt" style="top:960px">
+    <div class="eyebrow">Von mir für dich</div>
+    <h2 style="margin-top:24px;font-size:84px;max-width:560px">Meine Checkliste für deine erste Wohnung</h2>
+    <p class="klein" style="margin-top:26px;color:var(--ink);max-width:880px">Ich habe mit einer einzigen Wohnung angefangen. Mit dieser Liste siehst du, wo du heute stehst.</p>
+    <div class="link" style="margin-top:auto"><div class="tipp"><svg><use href="#pfeil"/></svg>Kostenlos holen</div><div class="feld"></div></div>
+    <div class="url" data-url="papier"></div>
+  </div>
+</section>
+
+<script>
+// Links hier anpassen. Sie stehen klein unter der Sticker-Fläche (nützlich für WhatsApp-Status, wo es keinen Sticker gibt).
+const LINKS = { check: "startklar.juttareichenbach.com", papier: "startklar.juttareichenbach.com/#papier" };
+for (const el of document.querySelectorAll("[data-url]")) el.textContent = LINKS[el.dataset.url];
+for (const img of document.querySelectorAll(".foto img")) {
+  const leer = () => img.parentNode.classList.add("leer");
+  if (img.complete && !img.naturalWidth) leer(); else img.addEventListener("error", leer);
+}
+if (location.hash === "#markiert") document.body.classList.add("markiert");
+</script>
+</body>
+</html>
