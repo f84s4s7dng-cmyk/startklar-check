@@ -4,3 +4,4 @@ stories/fotos/*
 !stories/fotos/.gitkeep
 stories/png/
 stories/png-markiert/
+stories/png-ohne-foto/

@@ -66,6 +66,11 @@ h2{font:800 92px/1.04 var(--display);letter-spacing:-.01em}
 .ueber{z-index:2}
 .karte{background:var(--creme);color:var(--ink);border-radius:40px;padding:56px 60px;box-shadow:0 30px 80px rgba(21,37,58,.25)}
 
+/* Ohne Foto: Fotofläche durchsichtig, damit das Bild in Instagram darunter gelegt werden kann */
+.ohne-foto{background:transparent}
+.ohne-foto .story:has(.foto){background:transparent}
+.ohne-foto .foto{display:none}
+
 /* PDF-Mockup */
 .blatt{background:#fff;padding:14px;border-radius:10px;box-shadow:0 40px 90px rgba(21,37,58,.35),0 6px 18px rgba(21,37,58,.2)}
 .blatt img{display:block;width:100%;border-radius:4px}
@@ -237,6 +242,7 @@ h2{font:800 92px/1.04 var(--display);letter-spacing:-.01em}
 <section class="story creme" id="10-foto-auto" data-ziel="papier">
   <div class="foto" data-label="Im Auto" style="bottom:auto;height:1050px"><img src="fotos/auto.jpg" alt=""></div>
   <div style="position:absolute;left:0;right:0;top:600px;height:460px;background:linear-gradient(to bottom,rgba(250,246,236,0),rgba(250,246,236,.55) 45%,var(--creme) 92%);z-index:1"></div>
+  <div style="position:absolute;left:0;right:0;top:1050px;bottom:0;background:var(--creme);z-index:1"></div>
   <div style="position:absolute;left:600px;top:560px;width:400px;z-index:3">
     <div class="blatt" style="transform:rotate(5deg)"><img src="checkliste-seite1.png" alt=""></div>
   </div>
@@ -258,6 +264,7 @@ for (const img of document.querySelectorAll(".foto img")) {
   if (img.complete && !img.naturalWidth) leer(); else img.addEventListener("error", leer);
 }
 if (location.hash === "#markiert") document.body.classList.add("markiert");
+if (location.hash === "#ohne-foto") document.body.classList.add("ohne-foto");
 </script>
 </body>
 </html>

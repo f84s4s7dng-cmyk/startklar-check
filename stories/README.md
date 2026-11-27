@@ -29,3 +29,7 @@ In Instagram den **Link-Sticker** auf die Fläche unter „↓ …“ setzen. In
 3. Fertige Bilder: `stories/png/`
 
 Das Repository ist öffentlich. Fotos und fertige Bilder sind deshalb in `.gitignore` und werden nicht hochgeladen.
+
+## Foto-Stories ohne Foto
+
+`stories/png-ohne-foto/` enthält 07–10 als PNG mit durchsichtiger Fotofläche. In Instagram zuerst das eigene Foto als Story öffnen, dann die Vorlage über den Sticker „Foto“ darüberlegen und auf Bildschirmgröße ziehen.
