@@ -16,6 +16,7 @@ main{max-width:560px;margin:0 auto;padding:48px max(16px,env(safe-area-inset-lef
 h1{font:800 clamp(40px,11vw,56px)/1.05 'Outfit','Helvetica Neue',Arial,sans-serif;margin:0}
 h1 span{background:linear-gradient(transparent 64%,rgba(244,196,48,.75) 64%,rgba(244,196,48,.75) 90%,transparent 90%);padding:0 .04em}
 p{margin:0;color:var(--muted)}
+#dl[hidden]{display:none}
 a.btn{align-self:flex-start;background:var(--accent);color:#15253A;font-weight:700;text-decoration:none;padding:14px 20px;border-radius:12px}
 </style>
 </head>
@@ -24,6 +25,7 @@ a.btn{align-self:flex-start;background:var(--accent);color:#15253A;font-weight:7
   <h1>Danke, du bist <span>dabei</span></h1>
   <p>Deine Anmeldung ist bestätigt. Ab jetzt bekommst du meine Tipps rund um Immobilien als Kapitalanlage, mit echten Zahlen.</p>
   <p id="planMsg">Dein Ergebnis und deinen Plan schicke ich dir jetzt per Mail. Schau in ein paar Minuten in dein Postfach.</p>
+  <a class="btn" id="dl" href="#" hidden>Checkliste herunterladen</a>
   <p>Du willst schon jetzt über deine Situation sprechen? Schreib mir auf Instagram.</p>
   <a class="btn" href="https://www.instagram.com/juttareichenbach/">Zu @juttareichenbach</a>
   <a class="btn" href="/" style="background:transparent;color:var(--ink);border:1px solid #B9C4B6;font-weight:500">Zurück zum Check</a>
@@ -31,13 +33,24 @@ a.btn{align-self:flex-start;background:var(--accent);color:#15253A;font-weight:7
 <script>
 // Nach dem Bestätigungsklick: zwischengespeichertes Ergebnis jetzt per Mail verschicken
 (function () {
-  var id = new URLSearchParams(location.search).get("e");
-  if (!id) { document.getElementById("planMsg").textContent = "Deinen Plan findest du auch in deinem Postfach."; return; }
+  var q = new URLSearchParams(location.search), id = q.get("e"), pdf = q.get("c") === "1", msg = document.getElementById("planMsg");
+  if (!id) { msg.textContent = "Deinen Plan findest du auch in deinem Postfach."; return; }
   history.replaceState(null, "", location.pathname);
+  if (pdf) msg.textContent = "Einen Moment, ich mache deine Checkliste fertig …";
+  var later = "Deine Checkliste schicke ich dir per Mail. Schau in ein paar Minuten in dein Postfach.";
   var send = function (n) {
     fetch("/api/confirm", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: id }) })
-      .then(function (r) { if (r.status === 409 && n < 3) setTimeout(function () { send(n + 1); }, 4000); })
-      .catch(function () {});
+      .then(function (r) {
+        if (r.status === 409 && n < 3) { setTimeout(function () { send(n + 1); }, 4000); return; }
+        if (!pdf) return;
+        return r.json().then(function (d) {
+          if (d && d.download) {
+            var a = document.getElementById("dl"); a.href = d.download; a.hidden = false;
+            msg.textContent = "Hier kannst du deine Checkliste gleich herunterladen. Ich schicke sie dir außerdem per Mail.";
+          } else msg.textContent = d && d.already ? "Deine Checkliste habe ich dir schon per Mail geschickt. Schau in dein Postfach." : later;
+        });
+      })
+      .catch(function () { if (pdf) msg.textContent = later; });
   };
   send(0);
 })();

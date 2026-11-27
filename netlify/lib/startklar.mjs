@@ -109,3 +109,43 @@ export async function sendResult(email, name, r) {
 
 // Zwischenspeicher für Ergebnisse, bis die Anmeldung bestätigt ist (max. 30 Tage)
 export const KEEP_DAYS = 30;
+
+// ===== Checkliste zum Ausdrucken (Alternative zur App) =====
+// Nach der Bestätigung bekommt jede Person einen eigenen Download-Link (/api/checkliste?t=…).
+// Die PDF liegt nicht öffentlich auf der Seite, sondern wird nur über diesen Link ausgeliefert.
+export const DOWNLOAD_DAYS = 365;
+
+export async function newDownload(store, email) {
+  const t = crypto.randomUUID().replace(/-/g, "") + crypto.randomUUID().replace(/-/g, "").slice(0, 16);
+  await store.setJSON(t, { email }, { metadata: { ts: Date.now() } });
+  const site = (process.env.SITE_URL || "").replace(/\/$/, "");
+  return `${site}/api/checkliste?t=${t}`;
+}
+
+export function checklistMail(name, url) {
+  const kennenlern = process.env.KENNENLERN_LINK || "https://www.instagram.com/juttareichenbach/", ctaText = process.env.KENNENLERN_LINK ? "Kennenlerngespräch buchen" : "Schreib mir auf Instagram";
+  const p = (t, extra = "") => `<p style="font-size:15px;line-height:1.55;margin:0 0 14px${extra}">${t}</p>`;
+  return `<!doctype html><html><head><meta charset="utf-8"></head><body style="margin:0;background:#FAF6EC;font-family:'Plus Jakarta Sans',Arial,Helvetica,sans-serif;color:#15253A">
+<div style="max-width:560px;margin:0 auto;padding:24px 16px">
+<div style="background:#15253A;border-radius:12px;margin-bottom:20px;padding:18px 24px"><img src="https://startklar.juttareichenbach.com/logo-mail.png" width="240" height="44" alt="Jutta Reichenbach" style="display:block;border:0;width:240px;height:44px"></div>
+<h1 style="font-family:Outfit,Arial,Helvetica,sans-serif;font-weight:800;font-size:28px;line-height:1.1;margin:0 0 16px">Deine Startklar-Checkliste</h1>
+${p(`Hallo${name ? ` ${esc(name)}` : ""},`)}
+${p("hier ist deine Checkliste zum Ausdrucken. Zwei Seiten, ein Stift und dein letzter Kontoauszug, mehr brauchst du nicht. Deine Zahlen bleiben dabei ganz bei dir.")}
+<p style="margin:20px 0"><a href="${esc(url)}" style="background:#F4C430;color:#15253A;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:bold">Checkliste herunterladen</a></p>
+${p("Der Link gehört dir. Du kannst ihn ein Jahr lang nutzen, wenn du die Checkliste noch einmal brauchst.", ";color:#56636F;font-size:13px")}
+<h2 style="font-family:Outfit,Arial,Helvetica,sans-serif;font-weight:800;font-size:22px;margin:24px 0 8px">Lass uns draufschauen</h2>
+${p(`Im kostenlosen Kennenlerngespräch schauen wir gemeinsam auf deine Zahlen und finden heraus, wie dein Weg zur ersten Wohnung aussieht. ${PROOF}`)}
+<p style="margin:20px 0"><a href="${esc(kennenlern)}" style="background:#15253A;color:#FAF6EC;padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:bold">${ctaText}</a></p>
+<p>Viele Grüße<br>Jutta</p>
+<p style="font-size:11px;color:#56636F">Allgemeine Einschätzung, ersetzt keine Finanz- oder Steuerberatung. Jede Bank rechnet anders.</p>
+</div></body></html>`;
+}
+
+export async function sendChecklist(email, name, url) {
+  await brevo("/smtp/email", {
+    sender: { email: process.env.BREVO_SENDER_EMAIL, name: process.env.BREVO_SENDER_NAME || "Jutta Reichenbach" },
+    to: [{ email }],
+    subject: "Deine Startklar-Checkliste zum Ausdrucken",
+    htmlContent: checklistMail(name, url),
+  });
+}

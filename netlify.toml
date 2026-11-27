@@ -13,3 +13,7 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Die Checkliste liegt nicht in public/, sie wird nur über /api/checkliste mit persönlichem Link ausgeliefert
+[functions.checkliste]
+  included_files = ["druckversion/Startklar-Check.pdf"]
