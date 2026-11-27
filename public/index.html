@@ -125,6 +125,14 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
 .legal{font-size:12px;color:var(--muted);margin:0}
 .foot{display:flex;gap:16px;flex-wrap:wrap;font-size:12px}
 .foot a{color:var(--muted)}
+/* Checkliste zum Ausdrucken */
+.paper{flex-direction:row;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:16px 20px}
+.paper .txt{flex:1 1 260px;display:flex;flex-direction:column;gap:4px}
+.paper .txt p{margin:0;font-size:14.5px;color:var(--muted)}
+.paper .txt b{font:700 17px/1.25 var(--display)}
+.paper .ghost{flex:none}
+.paper form{flex:1 1 100%;display:flex;flex-direction:column;gap:12px}
+.paper input[type=email],.paper input[type=text]{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 14px;width:100%}
 </style>
 </head>
 <body>
@@ -138,6 +146,18 @@ input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;bac
     <p class="sub">Für deine erste Immobilie</p>
     <p class="lede">Bevor du das erste Exposé anschaust, schau auf dein eigenes Konto. Neun Fragen, dann weißt du, wo du stehst und was dir noch fehlt.</p>
   </header>
+
+  <section class="card paper" id="papier" aria-labelledby="h-papier">
+    <div class="txt"><b id="h-papier">Lieber auf Papier?</b><p id="pText">Du gibst deine Zahlen nicht gern online ein? Hol dir die Checkliste zum Ausdrucken. Zwei Seiten, und alles bleibt bei dir.</p></div>
+    <button class="ghost" type="button" id="pOpen" aria-expanded="false" aria-controls="pForm">Checkliste anfordern</button>
+    <form id="pForm" novalidate hidden>
+      <input type="text" id="pName" placeholder="Vorname" autocomplete="given-name">
+      <input type="email" id="pMail" placeholder="E-Mail-Adresse" autocomplete="email" required>
+      <label class="consent"><input type="checkbox" id="pOk" required><span>Ja, schick mir die Checkliste und Jutta Reichenbachs Newsletter rund um Immobilien. Abmelden geht jederzeit mit einem Klick. Mehr dazu in der <a id="dsLink3" href="#">Datenschutzerklärung</a>.</span></label>
+      <button class="primary" type="submit">Checkliste schicken</button>
+      <p class="note" id="pMsg" role="status"></p>
+    </form>
+  </section>
 
   <section class="card" aria-labelledby="h-ziel">
     <div class="stephead"><span class="num">1</span><h2 id="h-ziel">Dein Ziel</h2></div>
@@ -487,6 +507,34 @@ const link = (id, url) => { if (url) $(id).href = url; };
 link("ctaLink", CONFIG.kennenlernLink); link("imLink", CONFIG.impressumLink); link("dsLink2", CONFIG.datenschutzLink); link("dsLink1", CONFIG.datenschutzLink); link("exposeLink", CONFIG.exposeCheckLink);
 $("proto").hidden = !CONFIG.preview;
 $("gateForm").addEventListener("submit", submitGate);
+
+/* Checkliste zum Ausdrucken: nur Vorname und E-Mail, keine Zahlen */
+link("dsLink3", CONFIG.datenschutzLink);
+$("pOpen").addEventListener("click", () => {
+  $("pForm").hidden = false; $("pOpen").hidden = true; $("pOpen").setAttribute("aria-expanded", "true"); $("pMail").focus();
+});
+$("pForm").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const mail = $("pMail").value.trim(), name = $("pName").value.trim(), msg = $("pMsg");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) { msg.textContent = "Bitte gib eine gültige E-Mail-Adresse ein."; return; }
+  if (!$("pOk").checked) { msg.textContent = "Bitte setz noch den Haken, damit ich dir die Checkliste schicken darf."; return; }
+  let confirmed = false;
+  if (!CONFIG.preview) {
+    msg.textContent = "Einen Moment …";
+    try {
+      const res = await fetch("/api/subscribe", { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: mail, name, consent: true, kind: "checkliste" }) });
+      if (!res.ok) throw new Error();
+      confirmed = !!(await res.json().catch(() => ({}))).confirmed;
+    } catch { msg.textContent = "Das hat nicht geklappt. Versuch es bitte gleich nochmal."; return; }
+  }
+  $("pForm").hidden = true;
+  $("pText").textContent = CONFIG.preview
+    ? "Vorschau: In der echten Version kommt jetzt eine Mail zum Bestätigen. Danach gibt es die Checkliste zum Herunterladen und per Mail."
+    : confirmed
+      ? "Ich habe dir die Checkliste gerade per Mail geschickt. Schau in dein Postfach."
+      : "Fast geschafft: Schau in dein Postfach und klick in meiner Mail auf „Ja, ich bin dabei“. Danach kannst du die Checkliste sofort herunterladen, und ich schicke sie dir auch per Mail.";
+});
 compute();
 </script>
 </body>
